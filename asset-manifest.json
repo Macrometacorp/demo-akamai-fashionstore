@@ -1,0 +1,43 @@
+{
+  "files": {
+    "main.css": "/static/css/main.6ce1fc4f.chunk.css",
+    "main.js": "/static/js/main.7b5f65a7.chunk.js",
+    "runtime-main.js": "/static/js/runtime-main.af964a35.js",
+    "static/css/2.a7781b2c.chunk.css": "/static/css/2.a7781b2c.chunk.css",
+    "static/js/2.a49a2b46.chunk.js": "/static/js/2.a49a2b46.chunk.js",
+    "index.html": "/index.html",
+    "precache-manifest.eb1ea6ba534e4c7755e659fdf8b24d78.js": "/precache-manifest.eb1ea6ba534e4c7755e659fdf8b24d78.js",
+    "service-worker.js": "/service-worker.js",
+    "static/js/2.a49a2b46.chunk.js.LICENSE.txt": "/static/js/2.a49a2b46.chunk.js.LICENSE.txt",
+    "static/media/Erin.png": "/static/media/Erin.e99fad78.png",
+    "static/media/Jacob.png": "/static/media/Jacob.ba959c51.png",
+    "static/media/John.png": "/static/media/John.f251214e.png",
+    "static/media/bestSellers.png": "/static/media/bestSellers.f95a983a.png",
+    "static/media/burgers.png": "/static/media/burgers.161c4a44.png",
+    "static/media/bootstrap.css": "/static/media/glyphicons-halflings-regular.fa277232.woff",
+    "static/media/hero-bags.png": "/static/media/hero-bags.b9922f0a.png",
+    "static/media/hero-designers.png": "/static/media/hero-designers.6f9f1450.png",
+    "static/media/hero-homewear.jpg": "/static/media/hero-homewear.9f6ee2fc.jpg",
+    "static/media/hero-kids.png": "/static/media/hero-kids.32ac813b.png",
+    "static/media/hero-main.png": "/static/media/hero-main.aa13e79c.png",
+    "static/media/hero-men.png": "/static/media/hero-men.a9581311.png",
+    "static/media/hero-sportswear.png": "/static/media/hero-sportswear.98679286.png",
+    "static/media/hero-women.png": "/static/media/hero-women.930907de.png",
+    "static/media/italian.png": "/static/media/italian.92245953.png",
+    "static/media/noodles.png": "/static/media/noodles.86634adf.png",
+    "static/media/pancakes.png": "/static/media/pancakes.22f42738.png",
+    "static/media/pastOrders.png": "/static/media/pastOrders.9fa03bfe.png",
+    "static/media/pineapple.png": "/static/media/pineapple.203d8247.png",
+    "static/media/screenshot.png": "/static/media/screenshot.d1b410f3.png",
+    "static/media/supportedCards.png": "/static/media/supportedCards.0f89c06e.png",
+    "static/media/umami.png": "/static/media/umami.c6f148dc.png",
+    "static/media/yourpastorders.png": "/static/media/yourpastorders.76f37cd9.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.af964a35.js",
+    "static/css/2.a7781b2c.chunk.css",
+    "static/js/2.a49a2b46.chunk.js",
+    "static/css/main.6ce1fc4f.chunk.css",
+    "static/js/main.7b5f65a7.chunk.js"
+  ]
+}
