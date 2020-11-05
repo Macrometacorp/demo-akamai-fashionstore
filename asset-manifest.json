@@ -1,25 +1,25 @@
 {
   "files": {
     "main.css": "/tutorial-akamai-fashionstore/static/css/main.6ce1fc4f.chunk.css",
-    "main.js": "/tutorial-akamai-fashionstore/static/js/main.2792db50.chunk.js",
+    "main.js": "/tutorial-akamai-fashionstore/static/js/main.a75580dc.chunk.js",
     "runtime-main.js": "/tutorial-akamai-fashionstore/static/js/runtime-main.8139e451.js",
     "static/css/2.13ce12b6.chunk.css": "/tutorial-akamai-fashionstore/static/css/2.13ce12b6.chunk.css",
     "static/js/2.a49a2b46.chunk.js": "/tutorial-akamai-fashionstore/static/js/2.a49a2b46.chunk.js",
     "index.html": "/tutorial-akamai-fashionstore/index.html",
-    "precache-manifest.0983520e228d8037e51dbd50d74bb8de.js": "/tutorial-akamai-fashionstore/precache-manifest.0983520e228d8037e51dbd50d74bb8de.js",
+    "precache-manifest.3aca09ecd2e674f78b8b1e36cf7d3227.js": "/tutorial-akamai-fashionstore/precache-manifest.3aca09ecd2e674f78b8b1e36cf7d3227.js",
     "service-worker.js": "/tutorial-akamai-fashionstore/service-worker.js",
     "static/js/2.a49a2b46.chunk.js.LICENSE.txt": "/tutorial-akamai-fashionstore/static/js/2.a49a2b46.chunk.js.LICENSE.txt",
     "static/media/Erin.png": "/tutorial-akamai-fashionstore/static/media/Erin.e99fad78.png",
     "static/media/Jacob.png": "/tutorial-akamai-fashionstore/static/media/Jacob.ba959c51.png",
     "static/media/John.png": "/tutorial-akamai-fashionstore/static/media/John.f251214e.png",
-    "static/media/bestSellers.png": "/tutorial-akamai-fashionstore/static/media/bestSellers.f95a983a.png",
+    "static/media/bestSellers.png": "/tutorial-akamai-fashionstore/static/media/bestSellers.13a4d4a9.png",
     "static/media/burgers.png": "/tutorial-akamai-fashionstore/static/media/burgers.161c4a44.png",
     "static/media/bootstrap.css": "/tutorial-akamai-fashionstore/static/media/glyphicons-halflings-regular.fa277232.woff",
     "static/media/hero-bags.png": "/tutorial-akamai-fashionstore/static/media/hero-bags.b9922f0a.png",
     "static/media/hero-designers.png": "/tutorial-akamai-fashionstore/static/media/hero-designers.6f9f1450.png",
     "static/media/hero-homewear.jpg": "/tutorial-akamai-fashionstore/static/media/hero-homewear.9f6ee2fc.jpg",
     "static/media/hero-kids.png": "/tutorial-akamai-fashionstore/static/media/hero-kids.32ac813b.png",
-    "static/media/hero-main.png": "/tutorial-akamai-fashionstore/static/media/hero-main.aa13e79c.png",
+    "static/media/hero-main.png": "/tutorial-akamai-fashionstore/static/media/hero-main.f2fdebac.png",
     "static/media/hero-men.png": "/tutorial-akamai-fashionstore/static/media/hero-men.a9581311.png",
     "static/media/hero-sportswear.png": "/tutorial-akamai-fashionstore/static/media/hero-sportswear.98679286.png",
     "static/media/hero-women.png": "/tutorial-akamai-fashionstore/static/media/hero-women.930907de.png",
@@ -31,13 +31,13 @@
     "static/media/screenshot.png": "/tutorial-akamai-fashionstore/static/media/screenshot.d1b410f3.png",
     "static/media/supportedCards.png": "/tutorial-akamai-fashionstore/static/media/supportedCards.0f89c06e.png",
     "static/media/umami.png": "/tutorial-akamai-fashionstore/static/media/umami.c6f148dc.png",
-    "static/media/yourpastorders.png": "/tutorial-akamai-fashionstore/static/media/yourpastorders.76f37cd9.png"
+    "static/media/yourpastorders.png": "/tutorial-akamai-fashionstore/static/media/yourpastorders.ef97449d.png"
   },
   "entrypoints": [
     "static/js/runtime-main.8139e451.js",
     "static/css/2.13ce12b6.chunk.css",
     "static/js/2.a49a2b46.chunk.js",
     "static/css/main.6ce1fc4f.chunk.css",
-    "static/js/main.2792db50.chunk.js"
+    "static/js/main.a75580dc.chunk.js"
   ]
 }

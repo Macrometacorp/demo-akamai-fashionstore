@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/tutorial-akamai-fashionstore/precache-manifest.0983520e228d8037e51dbd50d74bb8de.js"
+  "/tutorial-akamai-fashionstore/precache-manifest.3aca09ecd2e674f78b8b1e36cf7d3227.js"
 );
 
 self.addEventListener('message', (event) => {

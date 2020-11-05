@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "a9d948bdf1ed1e8304fbd8ed9abd5fa7",
+    "revision": "2c52721588aeb9c35afc281770e953f7",
     "url": "/tutorial-akamai-fashionstore/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/tutorial-akamai-fashionstore/static/css/2.13ce12b6.chunk.css"
   },
   {
-    "revision": "f6ad295a0957a77a3b51",
+    "revision": "a73f7a003981bc2626bf",
     "url": "/tutorial-akamai-fashionstore/static/css/main.6ce1fc4f.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/tutorial-akamai-fashionstore/static/js/2.a49a2b46.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "f6ad295a0957a77a3b51",
-    "url": "/tutorial-akamai-fashionstore/static/js/main.2792db50.chunk.js"
+    "revision": "a73f7a003981bc2626bf",
+    "url": "/tutorial-akamai-fashionstore/static/js/main.a75580dc.chunk.js"
   },
   {
     "revision": "6533a7d2fb4f3cf370f5",
@@ -40,8 +40,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/tutorial-akamai-fashionstore/static/media/John.f251214e.png"
   },
   {
-    "revision": "f95a983ab2893a069c782d92ee6b9a70",
-    "url": "/tutorial-akamai-fashionstore/static/media/bestSellers.f95a983a.png"
+    "revision": "13a4d4a9c19a863c47f4ca6d1030b39b",
+    "url": "/tutorial-akamai-fashionstore/static/media/bestSellers.13a4d4a9.png"
   },
   {
     "revision": "161c4a441a391c6bc596220c8db0a1e4",
@@ -84,8 +84,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/tutorial-akamai-fashionstore/static/media/hero-kids.32ac813b.png"
   },
   {
-    "revision": "aa13e79c4d79ab5c7da02f157d0adfdb",
-    "url": "/tutorial-akamai-fashionstore/static/media/hero-main.aa13e79c.png"
+    "revision": "f2fdebac435789c312bc3b0ea6827218",
+    "url": "/tutorial-akamai-fashionstore/static/media/hero-main.f2fdebac.png"
   },
   {
     "revision": "a9581311748b574fff403c8006336a06",
@@ -132,7 +132,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/tutorial-akamai-fashionstore/static/media/umami.c6f148dc.png"
   },
   {
-    "revision": "76f37cd9c73a4a657f53ac2c301dc74b",
-    "url": "/tutorial-akamai-fashionstore/static/media/yourpastorders.76f37cd9.png"
+    "revision": "ef97449d40f5c46622fd6aebf61d670e",
+    "url": "/tutorial-akamai-fashionstore/static/media/yourpastorders.ef97449d.png"
   }
 ]);
