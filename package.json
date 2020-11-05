@@ -1,5 +1,4 @@
 {
-  "homepage": "https://macrometacorp.github.io/tutorial-akamai-fashionstore",
   "name": "c8-fashionstore-demo-app",
   "version": "0.1.0",
   "private": true,
@@ -13,6 +12,7 @@
     "@types/react-router-bootstrap": "^0.24.5",
     "@types/react-router-dom": "^4.3.1",
     "bootstrap": "^3.3.7",
+    "http-server": "^0.12.3",
     "react": "^16.5.0",
     "react-bootstrap": "^0.32.4",
     "react-dom": "^16.5.0",
@@ -27,7 +27,8 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "serve": "npm run build && http-server ./build"
   },
   "devDependencies": {
     "gh-pages": "^3.1.0"
