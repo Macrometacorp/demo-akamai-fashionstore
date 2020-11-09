@@ -1,2 +1,4 @@
 /node_modules
 /build
+edgeworker/node_modules
+edgeworker/dist

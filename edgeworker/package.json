@@ -1,0 +1,21 @@
+{
+  "name": "edgeworker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "buildOld": "rm -rf dist && rollup -c && cd dist/work && tar -czvf ../fashionstore.tgz *",
+    "build": "rm -rf fashionstore.tgz && tar -czvf fashionstore.tgz main.js router.js handler.js client.js c8qls.js bundle.json && akamai sandbox update-edgeworker 4692 fashionstore.tgz"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^16.0.0",
+    "@rollup/plugin-node-resolve": "^10.0.0",
+    "rollup": "^2.33.1",
+    "rollup-plugin-copy-assets": "^2.0.1",
+    "rollup-plugin-json": "^4.0.0"
+  }
+}
