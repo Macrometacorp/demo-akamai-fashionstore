@@ -12,11 +12,10 @@ interface BestSellersState {
   // fashionItems: { fashionItemId: any }[];
   fashionItems: {
     _key: string;
-    author: string;
-    name: string;
-    price: number;
-    rating: number;
-    category: string;
+    category: string,
+    name: string,
+    price: number,
+    rating: number
   }[];
 }
 

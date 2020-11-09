@@ -200,7 +200,7 @@ async function getImageHandler(request) {
   //   headers: { "Content-Type": "image/jpeg" },
   // });
 
-  // const res = await FASHIONITEM_IMAGES.get(fashionItemId, "arrayBuffer");
+  // const res = await BOOK_IMAGES.get(fashionItemId, "arrayBuffer");
   // const response = new Response(res, {
   //   headers: { "Content-Type": "image/jpeg" },
   // });

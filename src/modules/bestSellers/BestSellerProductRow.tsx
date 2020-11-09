@@ -13,11 +13,10 @@ interface ProductRowProps {
 
 export interface FashionItem {
   _key: string;
-  price: number;
-  category: string;
-  name: string;
-  rating: number;
-  author: string;
+  category: string,
+  name: string,
+  price: number,
+  rating: number
 }
 
 interface ProductRowState {
@@ -58,7 +57,7 @@ export class ProductRow extends React.Component<
           <div className="media-left media-middle no-padding">
             <img
               className="media-object product-thumb"
-              src={`./api/getImage?fashionItemId=${this.state.fashionItem["_key"]}`}
+              src={require(`../../images/categories/${this.state.fashionItem["_key"]}`)}
               alt={`${this.state.fashionItem.name} cover`}
             />
           </div>

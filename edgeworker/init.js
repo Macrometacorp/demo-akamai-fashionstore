@@ -68,7 +68,7 @@ const VIEWS = [
     name: "findFashionItems",
     properties: {
       links: {
-        FashionItemsTable: {
+        BooksTable: {
           analyzers: ["text_en"],
           fields: {},
           includeAllFields: true,
