@@ -18,13 +18,7 @@ const getQueryParam = (request, key) => {
 
 const executeQuery = async (c8qlKey, bindValue) => {
   const { query, bindVars } = queries(c8qlKey, bindValue);
-  let result;
-  try {
-    result = await client.executeQuery(query, bindVars);
-  } catch (err) {
-    result = err;
-  }
-  return result;
+  return client.executeQuery(query, bindVars);
 };
 
 const getCustomerId = (request) => {
@@ -54,14 +48,14 @@ async function initHandler(request) {
 async function fashionItemHandler(request, c8qlKey) {
   let bindValue = getLastPathParam(request);
   const categoryQueryParam = getQueryParam(request, "category");
-  if (c8qlKey === "ListFashionItems" && categoryQueryParam) {
-    // const queryParam = bindValue.split("?")[1].split("=");
+  if (
+    c8qlKey === "ListFashionItems" &&
+    categoryQueryParam !== "null" &&
+    categoryQueryParam
+  ) {
     bindValue = { category: categoryQueryParam };
   }
-  const result = await executeQuery(c8qlKey, bindValue);
-  return result;
-  // const body = JSON.stringify(result);
-  // return new Response(body, optionsObj);
+  return executeQuery(c8qlKey, bindValue);
 }
 
 async function cartHandler(request, c8qlKey) {
@@ -185,12 +179,12 @@ async function signinHandler(request) {
 function whoAmIHandler(request) {
   const customerId = getCustomerId(request);
   let message = "No current user";
-  let status = 401;
+  let code = 401;
   if (customerId !== "null" && customerId) {
     message = customerId;
-    status = 200;
+    code = 200;
   }
-  return { status, message };
+  return Promise.resolve({ ok: true, code, message });
 }
 
 async function getImageHandler(request) {

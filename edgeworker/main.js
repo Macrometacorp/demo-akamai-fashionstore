@@ -8,7 +8,33 @@ const API_KEY =
 const FABRIC = "_system";
 
 export async function responseProvider(request) {
-  const response = await executeHandler(request);
+  let result = {};
+  let body;
+  try {
+    const response = await executeHandler(request);
+    if (response.ok) {
+      result.ok = true;
+    } else {
+      result.ok = false;
+    }
+    if (
+      response.message &&
+      response.status &&
+      Object.keys(response).length === 3
+    ) {
+      body = response;
+    } else if (response.body) {
+      body = await response.json();
+    } else if (response.text) {
+      body = await response.text();
+    } else {
+      body = { message: "Something unexpected" };
+    }
+    result = { ...result, ...body };
+  } catch (e) {
+    result.error = true;
+    result.errorMessage = e;
+  }
   return Promise.resolve(
     createResponse(
       200,
@@ -18,17 +44,7 @@ export async function responseProvider(request) {
           "Content-Language": ["en-US"],
         },
       },
-      JSON.stringify(response)
-      // JSON.stringify({
-      //   method: request.method,
-      //   custom: request.path,
-      //   params: params.get("testParam"),
-      //   allParams: JSON.stringify(params.keys()),
-      //   test: TEST,
-      //   res,
-      //   msg: res.message,
-      //   status: res.status,
-      // })
+      JSON.stringify(result)
     )
   );
 }
