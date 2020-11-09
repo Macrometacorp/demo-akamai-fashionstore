@@ -42,7 +42,7 @@ export default class Home extends Component<HomeProps, HomeState> {
       <div className="lander">
         <h1>Edge Commerce Demo</h1>
         <hr />
-        <p>This is an example application demonstrating Akamai Workers & Marcometa Data Infrastructure. It's an exact replication of the Amazon Web Services Amazon Book Store example application using Akamai and Macrometa. In this fashionstore demo, users can browse and search for books, view recommendations, see the leaderboard, view past orders, and more. You can get this sample application up and running in your own environment and learn more about the architecture of the app by looking at the <a href="https://github.com/macrometacorp" target="_blank">github repository</a>.</p>
+        <p>This is an example application demonstrating Akamai Workers & Marcometa Data Infrastructure. It's an exact replication of the Amazon Web Services Amazon Fashion Store example application using Akamai and Macrometa. In this fashionstore demo, users can browse and search for fashion Items, view recommendations, see the leaderboard, view past orders, and more. You can get this sample application up and running in your own environment and learn more about the architecture of the app by looking at the <a href="https://github.com/macrometacorp" target="_blank">github repository</a>.</p>
         <div className="button-container col-md-12">
           <LinkContainer to="/signup">
           <a href="/signup">Sign up to explore the demo</a>

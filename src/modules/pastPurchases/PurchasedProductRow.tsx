@@ -4,7 +4,7 @@ import StarRating from "../../common/starRating/StarRating";
 import { API } from "../../apiCalls";
 import AddToCart from "../../common/AddToCart";
 import FriendRecommendations from "../../common/friendRecommendations/FriendRecommendations";
-import { Book } from "../bestSellers/BestSellerProductRow";
+import { FashionItem } from "../bestSellers/BestSellerProductRow";
 import { Order } from "../cart/CartProductRow";
 
 interface PurchasedProductRowProps {
@@ -12,7 +12,7 @@ interface PurchasedProductRowProps {
 }
 
 interface PurchasedProductRowState {
-  book: any;
+  fashionItem: any;
 }
 
 export class PurchasedProductRow extends React.Component<PurchasedProductRowProps, PurchasedProductRowState> {
@@ -20,25 +20,25 @@ export class PurchasedProductRow extends React.Component<PurchasedProductRowProp
     super(props);
 
     this.state = {
-      book: undefined
+      fashionItem: undefined
     };
   }
 
   async componentDidMount() {
     try {
-      // const book = await this.getBook(this.props.order);
-      this.setState({ book: this.props.order });
+      // const fashionItem = await this.getFashionItem(this.props.order);
+      this.setState({ fashionItem: this.props.order });
     } catch (e) {
       console.error(e);
     }
   }
 
-  // getBook(order: Order) {
-  //   return API.get("books", `/books/${order.bookId}`, null);
+  // getFashionItem(order: Order) {
+  //   return API.get("fashionItems", `/fashionItems/${order.fashionItemId}`, null);
   // }
 
   render() {
-    if (!this.state.book) {
+    if (!this.state.fashionItem) {
       return (
         <div className="white-box">
           <div className="media">
@@ -54,21 +54,21 @@ export class PurchasedProductRow extends React.Component<PurchasedProductRowProp
       <div className="white-box">
         <div className="media">
           <div className="media-left media-middle">
-            <img className="media-object product-thumb" src={`./api/getImage?bookId=${this.state.book.bookId}`} alt={`${this.state.book.name} covers`} />
+            <img className="media-object product-thumb" src={`./api/getImage?fashionItemId=${this.state.fashionItem.fashionItemId}`} alt={`${this.state.fashionItem.name} covers`} />
           </div>
           <div className="media-body">
-            <h3 className="media-heading">{this.state.book.name}
+            <h3 className="media-heading">{this.state.fashionItem.name}
               <div className="pull-right margin-1">
-                <small>{`${this.props.order.quantity} @ ${this.state.book.price}`}</small>
+                <small>{`${this.props.order.quantity} @ ${this.state.fashionItem.price}`}</small>
               </div>
             </h3>
-            <small>{this.state.book.category}</small>
-            {/* <FriendRecommendations bookId={this.props.order.bookId} /> */}
+            <small>{this.state.fashionItem.category}</small>
+            {/* <FriendRecommendations fashionItemId={this.props.order.fashionItemId} /> */}
             <div>
               Rating
-              <AddToCart bookId={this.state.book.bookId} price={this.state.book.price} variant="buyAgain" />
+              <AddToCart fashionItemId={this.state.fashionItem.fashionItemId} price={this.state.fashionItem.price} variant="buyAgain" />
             </div>
-            <StarRating stars={this.state.book.rating} />
+            <StarRating stars={this.state.fashionItem.rating} />
           </div>
         </div>
       </div>
