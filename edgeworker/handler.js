@@ -36,7 +36,7 @@ async function initHandler(request) {
 
   try {
     await init(client);
-    res = { code: "200", message: "Init successful" };
+    res = { status: "200", message: "Init successful" };
   } catch (e) {
     res = e;
   } finally {
@@ -60,7 +60,6 @@ async function fashionItemHandler(request, c8qlKey) {
 
 async function cartHandler(request, c8qlKey) {
   const customerId = getCustomerId(request);
-  let body = { error: true, code: 400, message: "Customer Id not provided" };
   if (customerId) {
     let bindValue = { customerId };
     let requestBody;
@@ -70,14 +69,18 @@ async function cartHandler(request, c8qlKey) {
     } else if (c8qlKey === "GetCartItem") {
       bindValue = { ...bindValue, fashionItemId: getLastPathParam(request) };
     }
-    body = await executeQuery(c8qlKey, bindValue);
+    return executeQuery(c8qlKey, bindValue);
   }
-  // return new Response(JSON.stringify(body), optionsObj);
+  return Promise.resolve({
+    error: true,
+    status: 401,
+    message: "Customer Id not provided",
+  });
 }
 
 async function ordersHandler(request, c8qlKey) {
   const customerId = getCustomerId(request);
-  let body = { error: true, code: 400, message: "Customer Id not provided" };
+  let body = { error: true, status: 400, message: "Customer Id not provided" };
   if (customerId) {
     let bindValue = { customerId };
     let orderDate = Date.now();
@@ -106,7 +109,7 @@ async function bestSellersHandler(request, c8qlKey) {
 
 async function recommendationsHandler(request, c8qlKey) {
   const customerId = getCustomerId(request);
-  let body = { error: true, code: 400, message: "Customer Id not provided" };
+  let body = { error: true, status: 400, message: "Customer Id not provided" };
   if (customerId) {
     let bindValue = { customerId };
     if (c8qlKey === "GetRecommendationsByFashionItem") {
@@ -179,12 +182,12 @@ async function signinHandler(request) {
 function whoAmIHandler(request) {
   const customerId = getCustomerId(request);
   let message = "No current user";
-  let code = 401;
+  let status = 401;
   if (customerId !== "null" && customerId) {
     message = customerId;
-    code = 200;
+    status = 200;
   }
-  return Promise.resolve({ ok: true, code, message });
+  return Promise.resolve({ error: true, status, message });
 }
 
 async function getImageHandler(request) {
