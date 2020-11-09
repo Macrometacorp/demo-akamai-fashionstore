@@ -147,8 +147,8 @@ const queries = (queryName, bindValue) => {
 
     case "Search":
       queryObj = {
-        query: `FOR doc IN findfashionItems
-        SEARCH PHRASE(doc.name, @search, "text_en") OR PHRASE(doc.author, @search, "text_en") OR PHRASE(doc.category, @search, "text_en")
+        query: `FOR doc IN findFashionItems
+        SEARCH PHRASE(doc.name, @search, "text_en") OR PHRASE(doc.category, @search, "text_en")
         SORT BM25(doc) desc
         RETURN doc`,
         bindVars: bindValue,

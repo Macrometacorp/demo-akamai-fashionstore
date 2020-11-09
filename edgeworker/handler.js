@@ -80,7 +80,6 @@ async function cartHandler(request, c8qlKey) {
       // const fashionItemId = getQueryParam(request, "fashionItemId");
       // const quantity = getQueryParam(request, "quantity");
       // const price = getQueryParam(request, "price");
-
       // requestBody = {
       //   fashionItemId,
       // };
@@ -126,17 +125,16 @@ async function ordersHandler(request, c8qlKey) {
       };
       shouldUpdatePurchased = true;
     }
-    body = await executeQuery(c8qlKey, bindValue);
-    if (shouldUpdatePurchased && !body.error) {
-      await executeQuery("AddPurchased", { orderId });
-    }
+    return await executeQuery(c8qlKey, bindValue);
+    // if (shouldUpdatePurchased && !body.error) {
+    //   await executeQuery("AddPurchased", { orderId });
+    // }
   }
-  // return new Response(JSON.stringify(body), optionsObj);
+  return notLoggedIn();
 }
 
 async function bestSellersHandler(request, c8qlKey) {
-  const result = await executeQuery(c8qlKey);
-  // return new Response(JSON.stringify(result), optionsObj);
+  return executeQuery(c8qlKey);
 }
 
 async function recommendationsHandler(request, c8qlKey) {
@@ -148,17 +146,18 @@ async function recommendationsHandler(request, c8qlKey) {
       const fashionItemId = getLastPathParam(request);
       bindValue = { ...bindValue, fashionItemId };
     }
-    body = await executeQuery(c8qlKey, bindValue);
+    return executeQuery(c8qlKey, bindValue);
   }
-  // return new Response(JSON.stringify(body), optionsObj);
+  return notLoggedIn();
 }
 
 async function searchHandler(request, c8qlKey) {
-  const queryParam = getLastPathParam(request);
-  // const search = queryParam.split("?")[1].split("=")[1];
-  const search = getQueryParam(request, "q");
-  const body = await executeQuery(c8qlKey, { search });
-  // return new Response(JSON.stringify(body), optionsObj);
+  const customerId = getCustomerId(request);
+  if (customerId) {
+    const search = getQueryParam(request, "q");
+    return executeQuery(c8qlKey, { search });
+  }
+  return notLoggedIn();
 }
 
 async function signupHandler(request) {

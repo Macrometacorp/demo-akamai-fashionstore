@@ -139,7 +139,7 @@ const pathHandlers = [
     regEx: ".*/api/search",
     handlers: {
       GET: function (request) {
-        return searchHandler(request);
+        return searchHandler(request, "Search");
       },
     },
   },
