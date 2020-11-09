@@ -2,15 +2,15 @@ import React from "react";
 import "../../common/styles/gallery.css";
 import { LinkContainer } from "react-router-bootstrap";
 import { API } from "../../apiCalls";
-import CategoryGalleryBook from "./CategoryGalleryBook";
-import { Book } from "../bestSellers/BestSellerProductRow";
+import CategoryGalleryFashionItem from "./CategoryGalleryFashionItem";
+import { FashionItem } from "../bestSellers/BestSellerProductRow";
 
 interface CategoryGalleryTeaserProps {}
 
 interface CategoryGalleryTeaserState {
   isLoading: boolean;
   // ABHISHEK: correct type
-  books: Book[] | any;
+  fashionItems: FashionItem[] | any;
 }
 
 export class CategoryGalleryTeaser extends React.Component<
@@ -22,14 +22,14 @@ export class CategoryGalleryTeaser extends React.Component<
 
     this.state = {
       isLoading: true,
-      books: [],
+      fashionItems: [],
     };
   }
 
   async componentDidMount() {
     try {
-      const books = await this.listBooks();
-      this.setState({ books });
+      const fashionItems = await this.listFashionItems();
+      this.setState({ fashionItems });
     } catch (e) {
       console.error(e);
     }
@@ -37,8 +37,8 @@ export class CategoryGalleryTeaser extends React.Component<
     this.setState({ isLoading: false });
   }
 
-  listBooks() {
-    return API.get("books", "/books?category=Cookbooks", null);
+  listFashionItems() {
+    return API.get("fashionItems", "/fashionItems?category=CookfashionItems", null);
   }
 
   render() {
@@ -51,14 +51,14 @@ export class CategoryGalleryTeaser extends React.Component<
             <h3>
               Men's Fashion{" "}
               <small>
-                <LinkContainer to="/category/Cookbooks">
+                <LinkContainer to="/category/CookfashionItems">
                   <a>Browse Men's Fashion</a>
                 </LinkContainer>
               </small>
             </h3>
             <div className="row">
-              {this.state.books.slice(0, 4).map((book: any) => (
-                <CategoryGalleryBook book={book} key={book["_key"]} />
+              {this.state.fashionItems.slice(0, 4).map((fashionItem: any) => (
+                <CategoryGalleryFashionItem fashionItem={fashionItem} key={fashionItem["_key"]} />
               ))}
             </div>
           </div>

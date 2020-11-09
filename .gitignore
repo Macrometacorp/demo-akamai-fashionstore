@@ -2,3 +2,4 @@
 /build
 edgeworker/node_modules
 edgeworker/dist
+.DS_Store

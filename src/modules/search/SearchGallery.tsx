@@ -1,8 +1,8 @@
 import React from "react";
 import "../../common/styles/gallery.css";
 import { API } from "../../apiCalls";
-import CategoryGalleryBook from "../category/CategoryGalleryBook";
-import { Book } from "../bestSellers/BestSellerProductRow";
+import CategoryGalleryFashionItem from "../category/CategoryGalleryFashionItem";
+import { FashionItem } from "../bestSellers/BestSellerProductRow";
 
 interface SearchGalleryProps {
   match: any;
@@ -10,7 +10,7 @@ interface SearchGalleryProps {
 
 interface SearchGalleryState {
   isLoading: boolean;
-  books: Book[];
+  fashionItems: FashionItem[];
 }
 
 export class SearchGallery extends React.Component<SearchGalleryProps, SearchGalleryState> {
@@ -19,19 +19,19 @@ export class SearchGallery extends React.Component<SearchGalleryProps, SearchGal
 
     this.state = {
       isLoading: true,
-      books: []
+      fashionItems: []
     };
   }
 
   async componentDidMount() {
     try {
-      const searchResults = await this.searchBooks();
+      const searchResults = await this.searchFashionItems();
 
-      // Map the search results to a book object
-      // const books = [];
+      // Map the search results to a fashionItem object
+      // const fashionItems = [];
       // for (var i = 0; i < searchResults.hits.total; i++) {
       //   var hit = searchResults.hits.hits[i] && searchResults.hits.hits[i]._source;
-      //   hit && books.push({
+      //   hit && fashionItems.push({
       //     _key: hit.id.$,
       //     author: hit.author.S,
       //     category: hit.category.S,
@@ -43,7 +43,7 @@ export class SearchGallery extends React.Component<SearchGalleryProps, SearchGal
       // }
 
       this.setState({ 
-        books: searchResults
+        fashionItems: searchResults
       });
     } catch (e) {
       console.error(e);
@@ -52,7 +52,7 @@ export class SearchGallery extends React.Component<SearchGalleryProps, SearchGal
     this.setState({ isLoading: false });
   }
 
-  searchBooks() {
+  searchFashionItems() {
     return API.get("search", `/search?q=${this.props.match.params.id}`, null);
   }
 
@@ -64,7 +64,7 @@ export class SearchGallery extends React.Component<SearchGalleryProps, SearchGal
           <div className="container-category">
             <h3>Search results</h3>
             <div className="row">
-              {this.state.books.map(book => <CategoryGalleryBook book={book} key={book["_key"]} />)}
+              {this.state.fashionItems.map(fashionItem => <CategoryGalleryFashionItem fashionItem={fashionItem} key={fashionItem["_key"]} />)}
             </div>
           </div>
         </div>
