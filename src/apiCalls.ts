@@ -10,8 +10,20 @@ const getOptions = (opts: any) => ({
   headers: { "X-Customer-Id": getCustomerId() },
 });
 
-const fetchWrapper = async (url: string, options: object) => {
-  const apiUrl = `./api${url}`;
+const fetchWrapper = async (url: string, options: any) => {
+  let apiUrl = `./api${url}`;
+
+  if (options.method !== "GET") {
+    const { body, method } = options;
+    const reqBody = JSON.parse(body);
+    const qs = Object.keys(reqBody)
+      .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(reqBody[key])}`)
+      .join('&');
+    apiUrl += `?method=${method}&${qs}`;
+    delete options.method;
+    delete options.body;
+  }
+
   const res = await fetch(apiUrl, options);
   if (res.ok) {
     return res.json();
@@ -53,9 +65,9 @@ const Auth = {
       })
     );
   },
-  currentUserInfo: function () {},
-  confirmSignUp: function () {},
-  confirmSignIn: function () {},
+  currentUserInfo: function () { },
+  confirmSignUp: function () { },
+  confirmSignIn: function () { },
 };
 
 const API = {
