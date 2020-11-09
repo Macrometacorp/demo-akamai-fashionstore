@@ -16,6 +16,13 @@ const getQueryParam = (request, key) => {
   return params.get(key);
 };
 
+const notLoggedIn = () =>
+  Promise.resolve({
+    error: true,
+    status: 401,
+    message: "No current user",
+  });
+
 const executeQuery = async (c8qlKey, bindValue) => {
   const { query, bindVars } = queries(c8qlKey, bindValue);
   return client.executeQuery(query, bindVars);
@@ -63,19 +70,44 @@ async function cartHandler(request, c8qlKey) {
   if (customerId) {
     let bindValue = { customerId };
     let requestBody;
-    if (request.method !== "GET") {
-      requestBody = await request.json();
-      bindValue = { ...bindValue, ...requestBody };
+
+    if (c8qlKey === "ListItemsInCart") {
+      // do nothing
     } else if (c8qlKey === "GetCartItem") {
       bindValue = { ...bindValue, fashionItemId: getLastPathParam(request) };
+    } else {
+      // ABHISHEK: see for other then GET
+      // const fashionItemId = getQueryParam(request, "fashionItemId");
+      // const quantity = getQueryParam(request, "quantity");
+      // const price = getQueryParam(request, "price");
+
+      // requestBody = {
+      //   fashionItemId,
+      // };
+      // if (c8qlKey === "AddToCart") {
+      //   requestBody = {
+      //     ...requestBody,
+      //     quantity,
+      //     price,
+      //   };
+      // } else if (c8qlKey === "UpdateCart") {
+      //   requestBody = { ...requestBody, quantity };
+      // }
+      // bindValue = { ...bindValue, ...requestBody };
     }
     return executeQuery(c8qlKey, bindValue);
+
+    // const fashionItemId = getQueryParam(request, "fashionItemId");
+    // const quantity = getQueryParam(request, "quantity");
+    // const price = getQueryParam(request, "price");
+
+    // return Promise.resolve({
+    //   error: false,
+    //   status: 401,
+    //   message: { fashionItemId, quantity, price },
+    // });
   }
-  return Promise.resolve({
-    error: true,
-    status: 401,
-    message: "Customer Id not provided",
-  });
+  return notLoggedIn();
 }
 
 async function ordersHandler(request, c8qlKey) {

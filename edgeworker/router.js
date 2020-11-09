@@ -162,7 +162,10 @@ const executeHandler = (request) => {
 
   if (!handlerObj || !handler || typeof handler !== "function") {
     // ABHISHEK: return 404
-    return { status: 404, message: `No handler for ${path}?method=${method}` };
+    return Promise.resolve({
+      status: 404,
+      message: `No handler for ${path}?method=${method}`,
+    });
   } else {
     return handler(request);
   }
