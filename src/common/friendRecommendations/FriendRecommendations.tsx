@@ -3,7 +3,7 @@ import React from 'react';
 import { FriendThumb } from './FriendThumb';
 
 interface FriendRecommendationsProps {
-  bookId: string;
+  fashionItemId: string;
 }
 
 interface FriendRecommendationsState {
@@ -20,7 +20,7 @@ class FriendRecommendations extends React.Component<FriendRecommendationsProps, 
   }
 
   getFriends = () => {
-    return API.get("recommendations", `/recommendations/${this.props.bookId}`, null);
+    return API.get("recommendations", `/recommendations/${this.props.fashionItemId}`, null);
   }
 
   async componentDidMount() {
@@ -42,7 +42,7 @@ class FriendRecommendations extends React.Component<FriendRecommendationsProps, 
     const friends = this.state.friends;
     return (
       <div>
-        <div>Friends who bought this book</div>
+        <div>Friends who bought this fashionItem</div>
         <p>
           {friends.slice(0, 3).map((friend: any) => <FriendThumb key={friend} />)}
           {numFriendsPurchased > 3 && <span className="orange">{` +${numFriendsPurchased - 3} ${(numFriendsPurchased - 3) > 1 ? "others" : "other"}`}</span>}

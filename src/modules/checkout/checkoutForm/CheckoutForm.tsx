@@ -52,8 +52,8 @@ export class CheckoutForm extends React.Component<CheckoutFormProps, CheckoutFor
   }
 
   getOrderTotal = () => {
-    return this.state.orders.reduce((total, book) => {
-      return total + book.price * book.quantity
+    return this.state.orders.reduce((total, fashionItem) => {
+      return total + fashionItem.price * fashionItem.quantity
     }, 0).toFixed(2);
   }
 
@@ -76,7 +76,7 @@ export class CheckoutForm extends React.Component<CheckoutFormProps, CheckoutFor
     const orders = this.state.orders;
     API.post("orders", "/orders", {
       body: {
-        books: orders
+        fashionItems: orders
       }
     }).then(() => this.setState({
       toConfirm: true

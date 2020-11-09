@@ -4,15 +4,15 @@ import StarRating from "../../common/starRating/StarRating";
 import { API } from "../../apiCalls";
 import AddToCart from "../../common/AddToCart";
 import FriendRecommendations from "../../common/friendRecommendations/FriendRecommendations";
-import { Book } from "../bestSellers/BestSellerProductRow";
+import { FashionItem } from "../bestSellers/BestSellerProductRow";
 
 interface ProductRowProps {
-  book: Book,
-  bookId: string;
+  fashionItem: FashionItem,
+  fashionItemId: string;
 }
 
 interface ProductRowState {
-  book: Book | undefined;
+  fashionItem: FashionItem | undefined;
 }
 
 export class ProductRow extends React.Component<
@@ -23,19 +23,19 @@ export class ProductRow extends React.Component<
     super(props);
 
     this.state = {
-      book: undefined,
+      fashionItem: undefined,
     };
   }
 
   componentDidMount() {
-    this.setState({book: this.props.book})
-    // API.get("books", `/books/${this.props.bookId}`, null)
-    //   .then((response) => this.setState({ book: response }))
+    this.setState({fashionItem: this.props.fashionItem})
+    // API.get("fashionItems", `/fashionItems/${this.props.fashionItemId}`, null)
+    //   .then((response) => this.setState({ fashionItem: response }))
     //   .catch((error) => console.error(error));
   }
 
   render() {
-    if (!this.state.book) return null;
+    if (!this.state.fashionItem) return null;
 
     return (
       <div className="white-box">
@@ -43,27 +43,27 @@ export class ProductRow extends React.Component<
           <div className="media-left media-middle no-padding">
             <img
               className="product-thumb border"
-              src={`./api/getImage?bookId=${this.state.book["_key"]}`}
-              alt={`${this.state.book.name} cover`}
+              src={`./api/getImage?fashionItemId=${this.state.fashionItem["_key"]}`}
+              alt={`${this.state.fashionItem.name} cover`}
             />
           </div>
           <div className="media-body product-padding padding-20">
             <h3 className="media-heading">
-              {this.state.book.name}
-              <small className="pull-right ">${this.state.book.price}</small>
+              {this.state.fashionItem.name}
+              <small className="pull-right ">${this.state.fashionItem.price}</small>
             </h3>
             <p className="no-margin">
-              <small>{this.state.book.category}</small>
+              <small>{this.state.fashionItem.category}</small>
             </p>
-            <FriendRecommendations bookId={this.props.bookId} />
+            <FriendRecommendations fashionItemId={this.props.fashionItemId} />
             <div>
               Rating
               <AddToCart
-                bookId={this.state.book["_key"]}
-                price={this.state.book.price}
+                fashionItemId={this.state.fashionItem["_key"]}
+                price={this.state.fashionItem.price}
               />
             </div>
-            <StarRating stars={this.state.book.rating} />
+            <StarRating stars={this.state.fashionItem.rating} />
           </div>
         </div>
       </div>

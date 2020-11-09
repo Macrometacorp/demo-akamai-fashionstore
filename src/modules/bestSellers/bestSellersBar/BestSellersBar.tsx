@@ -22,10 +22,10 @@ export class BestSellersBar extends React.Component {
           </LinkContainer>
         </div>
         <div className="row">
-          {bestSellers.map(book =>
-            <div className="col-md-2 hidden-sm hidden-xs" key={book}>
+          {bestSellers.map(fashionItem =>
+            <div className="col-md-2 hidden-sm hidden-xs" key={fashionItem}>
               <LinkContainer to="/best">
-                <NavItem><img src={book} className="thumbs" /></NavItem>
+                <NavItem><img src={fashionItem} className="thumbs" /></NavItem>
               </LinkContainer>
             </div>)}
         </div>

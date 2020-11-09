@@ -7,11 +7,11 @@ import StarRating from "../../common/starRating/StarRating";
 import "../../common/styles/productRow.css";
 
 interface ProductRowProps {
-  bookId: string;
-  book: Book;
+  fashionItemId: string;
+  fashionItem: FashionItem;
 }
 
-export interface Book {
+export interface FashionItem {
   _key: string;
   price: number;
   category: string;
@@ -21,7 +21,7 @@ export interface Book {
 }
 
 interface ProductRowState {
-  book: Book | undefined;
+  fashionItem: FashionItem | undefined;
 }
 
 export class ProductRow extends React.Component<
@@ -32,25 +32,25 @@ export class ProductRow extends React.Component<
     super(props);
 
     this.state = {
-      book: undefined,
+      fashionItem: undefined,
     };
   }
 
   async componentDidMount() {
     try {
-      // const book = await this.getBook();
-      this.setState({ book: this.props.book });
+      // const fashionItem = await this.getFashionItem();
+      this.setState({ fashionItem: this.props.fashionItem });
     } catch (e) {
       console.error(e);
     }
   }
 
-  getBook() {
-    return API.get("books", `/books/${this.props.bookId}`, null);
+  getFashionItem() {
+    return API.get("fashionItems", `/fashionItems/${this.props.fashionItemId}`, null);
   }
 
   render() {
-    if (!this.state.book) return null;
+    if (!this.state.fashionItem) return null;
 
     return (
       <div className="white-box">
@@ -58,30 +58,30 @@ export class ProductRow extends React.Component<
           <div className="media-left media-middle no-padding">
             <img
               className="media-object product-thumb"
-              src={`./api/getImage?bookId=${this.state.book["_key"]}`}
-              alt={`${this.state.book.name} cover`}
+              src={`./api/getImage?fashionItemId=${this.state.fashionItem["_key"]}`}
+              alt={`${this.state.fashionItem.name} cover`}
             />
           </div>
           <div className="media-body product-padding padding-20">
             <h3 className="media-heading">
-              {this.state.book.name}
+              {this.state.fashionItem.name}
               <small className="pull-right margin-1">
-                <h4>${this.state.book.price}</h4>
+                <h4>${this.state.fashionItem.price}</h4>
               </small>
             </h3>
             <p>
-              <small>{this.state.book.category}</small>
+              <small>{this.state.fashionItem.category}</small>
             </p>
             {/*ABHISHEK*/}
-            {/* <FriendRecommendations bookId={this.props.bookId} /> */}
+            {/* <FriendRecommendations fashionItemId={this.props.fashionItemId} /> */}
             <div>
               Rating
               <AddToCart
-                bookId={this.props.bookId}
-                price={this.state.book.price}
+                fashionItemId={this.props.fashionItemId}
+                price={this.state.fashionItem.price}
               />
             </div>
-            <StarRating stars={this.state.book.rating} />
+            <StarRating stars={this.state.fashionItem.rating} />
           </div>
         </div>
       </div>

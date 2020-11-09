@@ -4,7 +4,7 @@ import { Redirect } from "react-router";
 import { Glyphicon } from "react-bootstrap";
 
 interface AddToCartProps {
-  bookId: string;
+  fashionItemId: string;
   price: number;
   variant?: string;
 }
@@ -28,14 +28,14 @@ class AddToCart extends React.Component<AddToCartProps, AddToCartState> {
 
   onAddToCart = async () => {
     this.setState({ loading: true });
-    // let bookInCart = await API.get("cart", `/cart/${this.props.bookId}`, null);
-    // bookInCart = bookInCart[0];
-    // if the book already exists in the cart, increase the quantity
-    // if (bookInCart) {
+    // let fashionItemInCart = await API.get("cart", `/cart/${this.props.fashionItemId}`, null);
+    // fashionItemInCart = fashionItemInCart[0];
+    // if the fashionItem already exists in the cart, increase the quantity
+    // if (fashionItemInCart) {
     //   API.put("cart", "/cart", {
     //     body: {
-    //       bookId: this.props.bookId,
-    //       quantity: bookInCart.quantity + 1,
+    //       fashionItemId: this.props.fashionItemId,
+    //       quantity: fashionItemInCart.quantity + 1,
     //     },
     //   }).then(() => {
     //     alert("Item added successfully to the cart");
@@ -45,11 +45,11 @@ class AddToCart extends React.Component<AddToCartProps, AddToCartState> {
     //   });
     // }
 
-    // if the book does not exist in the cart, add it
+    // if the fashionItem does not exist in the cart, add it
     // else {
     API.post("cart", "/cart", {
       body: {
-        bookId: this.props.bookId,
+        fashionItemId: this.props.fashionItemId,
         price: this.props.price,
         quantity: 1,
       },
