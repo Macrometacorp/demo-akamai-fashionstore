@@ -13,7 +13,7 @@ const getOptions = (opts: any) => ({
 const fetchWrapper = async (url: string, options: any) => {
   let apiUrl = `./api${url}`;
 
-  if (options.method !== "GET") {
+  if (options.method && options.method !== "GET") {
     const { body, method } = options;
     const reqBody = JSON.parse(body);
     const qs = Object.keys(reqBody)
