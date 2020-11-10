@@ -59,14 +59,14 @@ export function onClientResponse(request, response) {
 // tar -czvf fashionstore.tgz main.js bundle.json
 // akamai sandbox add-edgeworker 4692 fashionstore.tgz
 // akamai sandbox update-edgeworker 4692 fashionstore.tgz
-// curl -i --header 'Host: fashionstore.demo.macrometa.io' http://127.0.0.1:9550/api/asadad
+// curl -i --header 'Host: fashionstore.demo.macrometa.io' 'http://127.0.0.1:9550/api/asadad'
 // http://fashionstore.demo.macrometa.io:9550/api/a1
 
 // akamai edgeworkers auth --expiry 60 d018263e6439675c18da2d9176d793093652d7537161371e2d292ae9d64a89ae
 
 // Akamai-EW-Trace: st=1604825241~exp=1604828841~acl=/*~hmac=d1c3877b2498bd47e4012a2c63109fd0e2dab15ac6eeb3f3fdb525359ccf58bd
 
-// curl -i --header 'Host: fashionstore.demo.macrometa.io' http://127.0.0.1:9550/api/asadad -H 'Pragma: akamai-x-ew-debug' -H 'Akamai-EW-Trace: st=1604825241~exp=1604828841~acl=/*~hmac=d1c3877b2498bd47e4012a2c63109fd0e2dab15ac6eeb3f3fdb525359ccf58bd'
+// curl -i --header 'Host: fashionstore.demo.macrometa.io' 'http://127.0.0.1:9550/api/asadad' -H 'Pragma: akamai-x-ew-debug' -H 'Akamai-EW-Trace: st=1604825241~exp=1604828841~acl=/*~hmac=d1c3877b2498bd47e4012a2c63109fd0e2dab15ac6eeb3f3fdb525359ccf58bd'
 
 // let res;
 // try {

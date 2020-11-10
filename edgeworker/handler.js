@@ -76,35 +76,24 @@ async function cartHandler(request, c8qlKey) {
     } else if (c8qlKey === "GetCartItem") {
       bindValue = { ...bindValue, fashionItemId: getLastPathParam(request) };
     } else {
-      // ABHISHEK: see for other then GET
-      // const fashionItemId = getQueryParam(request, "fashionItemId");
-      // const quantity = getQueryParam(request, "quantity");
-      // const price = getQueryParam(request, "price");
-      // requestBody = {
-      //   fashionItemId,
-      // };
-      // if (c8qlKey === "AddToCart") {
-      //   requestBody = {
-      //     ...requestBody,
-      //     quantity,
-      //     price,
-      //   };
-      // } else if (c8qlKey === "UpdateCart") {
-      //   requestBody = { ...requestBody, quantity };
-      // }
-      // bindValue = { ...bindValue, ...requestBody };
+      const fashionItemId = getQueryParam(request, "fashionItemId");
+      const quantity = parseInt(getQueryParam(request, "quantity"));
+      const price = parseFloat(getQueryParam(request, "price"));
+      requestBody = {
+        fashionItemId,
+      };
+      if (c8qlKey === "AddToCart") {
+        requestBody = {
+          ...requestBody,
+          quantity,
+          price,
+        };
+      } else if (c8qlKey === "UpdateCart") {
+        requestBody = { ...requestBody, quantity };
+      }
+      bindValue = { ...bindValue, ...requestBody };
     }
     return executeQuery(c8qlKey, bindValue);
-
-    // const fashionItemId = getQueryParam(request, "fashionItemId");
-    // const quantity = getQueryParam(request, "quantity");
-    // const price = getQueryParam(request, "price");
-
-    // return Promise.resolve({
-    //   error: false,
-    //   status: 401,
-    //   message: { fashionItemId, quantity, price },
-    // });
   }
   return notLoggedIn();
 }

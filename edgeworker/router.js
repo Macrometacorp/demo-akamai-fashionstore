@@ -148,7 +148,6 @@ const pathHandlers = [
 const executeHandler = (request) => {
   // /api/signin?method=post&username=abhishek@macrometa.io&password=12345678
   const path = request.path;
-  // const method = request.method;
 
   const params = new URLSearchParams(request.query);
   const method = (params.get("method") || "GET").toUpperCase();
