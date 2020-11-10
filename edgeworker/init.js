@@ -1,4 +1,5 @@
 const TEST = "testing 123";
+import client from './client.js';
 export { TEST };
 
 const COLLECTIONS = [
@@ -376,6 +377,8 @@ const VIEWS = [
   },
 ];
 
+const DC_LIST = "vikas-ap-west";
+
 const STREAM_APP_NAME = "UpdateBestseller";
 
 const UPDATE_BESTSELLER_APP_DEFINITION = `@App:name("${STREAM_APP_NAME}")
@@ -442,3 +445,66 @@ on BestsellersTable._key == _key;`;
 
 // // Stream App
 // UpdateBestseller
+
+const collectionHandler = (collection, isEdge) => {
+  const { name, data } = collection;
+  const prefix = `${isEdge ? "Edge " : ""}Collection ${name}`;
+  return client.hasCollection(name).then(() => {
+    console.log(`${prefix} already exists!!`)
+  }).catch(() => {
+    client.createCollection(name, isEdge).then(() => {
+      client.insertDocuments(name, data).then(() => {
+        console.log(`Data inserted in ${prefix}`);
+      });
+    });
+  });
+};
+
+async function init() {
+  
+  for (let collection of COLLECTIONS) {
+    await collectionHandler(collection, false);
+  }
+  
+  for (edgeCollection of EDGE_COLLECTIONS) {
+    await collectionHandler(edgeCollection, true);
+  }
+  
+  for (graph of GRAPHS) {
+    const { name, properties } = graph;
+    await client.hasGraph(name).then(() => {
+      console.log(`Graph ${name} already exists.`);
+    }).catch(() => {
+      client.createGraph(name, properties);
+      console.log(`Graph ${name} created`);
+    });
+  }
+  
+  for (view of VIEWS) {
+    const { name, properties } = view;
+    await client.hasView(name).then(() => {
+      console.log(`View ${name} already exists.`);
+    }).catch(() => {
+      client.createView(name, properties);
+      console.log(`View ${name} created`);
+    });
+  }
+  
+  try {
+    await client.hasStreamApp(STREAM_APP_NAME).then(() => {
+      console.log(`Streamapp ${STREAM_APP_NAME} already exists.`);
+    }).catch(() => {
+      client.createStreamApp(DC_LIST, UPDATE_BESTSELLER_APP_DEFINITION).then(() => {
+        console.log(`Streamapp ${STREAM_APP_NAME} created.`);
+        client.activateStreamApplication(STREAM_APP_NAME, true).then(() => {
+          console.log(`Streamapp ${STREAM_APP_NAME} activated.`);
+        });
+      })
+    });
+  } catch (e) {
+    console.log("Error!!!");
+    console.log(e);
+  }
+}
+
+module.exports = init;
