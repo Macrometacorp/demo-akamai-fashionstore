@@ -376,6 +376,43 @@ const VIEWS = [
   },
 ];
 
+const STREAM_APP_NAME = "UpdateBestseller";
+
+const UPDATE_BESTSELLER_APP_DEFINITION = `@App:name("${STREAM_APP_NAME}")
+@App:description("Updates BestsellerTable when a new order comes in the OrdersTable")
+
+define function getFashionItemQuantity[javascript] return int {
+    const prevQuantity = arguments[0];
+    const nextQuantity = arguments[1];
+    
+    let newQuantity = nextQuantity;
+    if(prevQuantity){
+        newQuantity = prevQuantity + nextQuantity;
+    }
+    return newQuantity;
+};
+
+@source(type='c8db', collection='OrdersTable', @map(type='passThrough'))
+define stream OrdersTable (_json string);
+
+@sink(type='c8streams', stream='BestsellerIntermediateStream', @map(type='json'))
+define stream BestsellerIntermediateStream (fashionItemId string, quantity int);
+
+@store(type = 'c8db', collection='BestsellersTable')
+define table BestsellersTable (_key string, quantity int);
+
+select json:getString(jsonElement, '$.fashionItemId') as fashionItemId, json:getInt(jsonElement, '$.quantity') as quantity
+from OrdersTable#json:tokenizeAsObject(_json, "$.fashionItems[*]")
+insert into BestsellerIntermediateStream;
+
+select next.fashionItemId as _key, getFashionItemQuantity(prev.quantity, next.quantity) as quantity
+from BestsellerIntermediateStream as next
+left outer join BestsellersTable as prev
+on next.fashionItemId == prev._key
+update or insert into BestsellersTable
+set BestsellersTable.quantity = quantity, BestsellersTable._key = _key
+on BestsellersTable._key == _key;`;
+
 // men: "Men",
 // women: "Women",
 // kids: "Kids",

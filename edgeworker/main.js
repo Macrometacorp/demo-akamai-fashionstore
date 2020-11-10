@@ -28,7 +28,7 @@ export async function responseProvider(request) {
     result = { ...result, ...body };
   } catch (e) {
     result.error = true;
-    result.errorMessage = e;
+    result.errorMessage = e.message;
   }
   return Promise.resolve(
     createResponse(
