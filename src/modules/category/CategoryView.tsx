@@ -4,14 +4,6 @@ import { SearchBar } from "../search/searchBar/SearchBar";
 import { BestSellersBar } from "../bestSellers/bestSellersBar/BestSellersBar";
 import { CategoryGallery } from "./CategoryGallery";
 
-// import database from "../../images/hero/hero-database.png";
-// import cars from "../../images/hero/hero-cars.png";
-// import cooks from "../../images/hero/hero-cookbooks.png";
-// import fairy from "../../images/hero/hero-fairytales.png";
-// import home from "../../images/hero/hero-home.png";
-// import scifi from "../../images/hero/hero-science.png";
-// import woodwork from "../../images/hero/hero-woodwork.png";
-
 import men from "../../images/hero/hero-men.png";
 import women from "../../images/hero/hero-women.png";
 import kids from "../../images/hero/hero-kids.png";
@@ -47,7 +39,7 @@ export default class CategoryView extends Component<CategoryViewProps> {
       default:
         return men;
     }
-  }
+  };
 
   render() {
     return (
@@ -55,7 +47,11 @@ export default class CategoryView extends Component<CategoryViewProps> {
         <SearchBar />
         <CategoryNavBar />
         <BestSellersBar />
-        <img src={this.getImage()} alt={`${this.getImage()} hero`} className="img-fluid full-width top-hero-padding" />
+        <img
+          src={this.getImage()}
+          alt={`${this.getImage()} hero`}
+          className="img-fluid full-width top-hero-padding"
+        />
         <CategoryGallery match={this.props.match} />
       </div>
     );

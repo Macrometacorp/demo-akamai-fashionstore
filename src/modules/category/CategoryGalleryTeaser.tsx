@@ -38,7 +38,7 @@ export class CategoryGalleryTeaser extends React.Component<
   }
 
   listFashionItems() {
-    return API.get("fashionItems", "/fashionItems?category=CookfashionItems", null);
+    return API.get("fashionItems", "/fashionItems?category=Men", null);
   }
 
   render() {
@@ -51,7 +51,7 @@ export class CategoryGalleryTeaser extends React.Component<
             <h3>
               Men's Fashion{" "}
               <small>
-                <LinkContainer to="/category/CookfashionItems">
+                <LinkContainer to="/category/Men">
                   <a>Browse Men's Fashion</a>
                 </LinkContainer>
               </small>
