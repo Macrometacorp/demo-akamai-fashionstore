@@ -172,13 +172,7 @@ async function signupHandler(request) {
     username,
     passwordHash: digestedPassword,
     customerId,
-  });
-  if (!result.error) {
-    const res = await executeQuery("AddFriends", { username });
-  }
-
-  // const body = JSON.stringify(result);
-  // // return new Response(body, optionsObj);
+  }).then(() => executeQuery("AddFriends", { username }));
 }
 
 async function signinHandler(request) {
