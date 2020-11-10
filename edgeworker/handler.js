@@ -114,7 +114,15 @@ async function ordersHandler(request, c8qlKey) {
       };
       shouldUpdatePurchased = true;
     }
-    return await executeQuery(c8qlKey, bindValue);
+    const checkoutPromise = executeQuery(c8qlKey, bindValue);
+    // if (shouldUpdatePurchased) {
+    //   return checkoutPromise.then(() => {
+    //     executeQuery("AddPurchased", { orderId });
+    //   });
+    // } else {
+      return checkoutPromise;
+    // }
+
     // if (shouldUpdatePurchased && !body.error) {
     //   await executeQuery("AddPurchased", { orderId });
     // }

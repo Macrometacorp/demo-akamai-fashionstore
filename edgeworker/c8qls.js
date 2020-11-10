@@ -95,7 +95,7 @@ const queries = (queryName, bindValue) => {
       queryObj = {
         query: `LET items = (FOR item IN CartTable FILTER item.customerId == @customerId RETURN item)
           LET fashionItems = (FOR item in items
-              FOR fashionItem in FashionItemsTable FILTER fashionItem._key == item.fashionItemId return {fashionItemId:fashionItem._key ,author: fashionItem.author,category:fashionItem.category,name:fashionItem.name,price:fashionItem.price,rating:fashionItem.rating,quantity:item.quantity})
+              FOR fashionItem in FashionItemsTable FILTER fashionItem._key == item.fashionItemId return {fashionItemId:fashionItem._key ,category:fashionItem.category,name:fashionItem.name,price:fashionItem.price,rating:fashionItem.rating,quantity:item.quantity})
           INSERT {_key: @orderId, customerId: @customerId, fashionItems: fashionItems, orderDate: @orderDate} INTO OrdersTable
           FOR item IN items REMOVE item IN CartTable`,
         bindVars: bindValue,
