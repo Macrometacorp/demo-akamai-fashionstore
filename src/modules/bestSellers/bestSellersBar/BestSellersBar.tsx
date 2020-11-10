@@ -3,14 +3,14 @@ import { LinkContainer } from "react-router-bootstrap";
 import { NavItem } from "react-bootstrap";
 import "../../../common/styles/gallery.css";
 
-import burgers from "../../../images/bestSellers/burgers.png";
-import italian from "../../../images/bestSellers/italian.png";
-import noodles from "../../../images/bestSellers/noodles.png";
-import pancakes from "../../../images/bestSellers/pancakes.png";
-import pineapple from "../../../images/bestSellers/pineapple.png";
-import umami from "../../../images/bestSellers/umami.png";
+import f1 from "../../../images/bestSellers/f1.jpg";
+import f6 from "../../../images/bestSellers/f6.jpg";
+import f12 from "../../../images/bestSellers/f12.jpg";
+import f20 from "../../../images/bestSellers/f20.jpg";
+import f26 from "../../../images/bestSellers/f26.jpg";
+import f35 from "../../../images/bestSellers/f35.jpg";
 
-const bestSellers = [burgers, italian, noodles, pancakes, pineapple, umami];
+const bestSellers = [f1, f6, f12, f20, f26, f35];
 
 export class BestSellersBar extends React.Component {
   render() {
