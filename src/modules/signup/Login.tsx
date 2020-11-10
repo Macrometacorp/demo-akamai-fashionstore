@@ -63,8 +63,7 @@ export default class Login extends React.Component<LoginProps, LoginState> {
     this.setState({ loading: true });
 
     try {
-      // ABHISHEK
-      // await Auth.signIn(this.state.email, this.state.password);
+      await Auth.signIn(this.state.email, this.state.password);
       this.props.userHasAuthenticated(true);
       this.setState({ redirect: true });
     } catch (e) {
