@@ -5,16 +5,18 @@ import { executeHandler } from "./router.js";
 export async function responseProvider(request) {
   let result = {};
   let body;
+  let status = 501;
   try {
     const response = await executeHandler(request);
-    if (response.ok || response.status === 200) {
+    status = response.code;
+    if (response.ok || response.code === 200) {
       result.ok = true;
     } else {
       result.ok = false;
     }
     if (
       response.message &&
-      response.status &&
+      response.code &&
       Object.keys(response).length === 3
     ) {
       body = response;
@@ -32,7 +34,7 @@ export async function responseProvider(request) {
   }
   return Promise.resolve(
     createResponse(
-      200,
+      status,
       {
         headers: {
           "Content-Type": ["application/json"],

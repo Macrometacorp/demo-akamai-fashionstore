@@ -29,7 +29,7 @@ const getQueryParam = (request, key) => {
 const notLoggedIn = () =>
   Promise.resolve({
     error: true,
-    status: 401,
+    code: 401,
     message: "No current user",
   });
 
@@ -53,7 +53,7 @@ async function initHandler(request) {
 
   try {
     await init(client);
-    res = { status: "200", message: "Init successful" };
+    res = { code: "200", message: "Init successful" };
   } catch (e) {
     res = e;
   } finally {
@@ -141,7 +141,6 @@ async function bestSellersHandler(request, c8qlKey) {
 
 async function recommendationsHandler(request, c8qlKey) {
   const customerId = getCustomerId(request);
-  let body = { error: true, status: 400, message: "Customer Id not provided" };
   if (customerId) {
     let bindValue = { customerId };
     if (c8qlKey === "GetRecommendationsByFashionItem") {
@@ -190,14 +189,14 @@ async function signinHandler(request) {
       const result = data.result;
       let response = {
         error: true,
-        status: 404,
+        code: 404,
         message: "User not found",
       };
       if (result.length) {
         response = {
           error: false,
-          status: 200,
-          message: result[0],
+          code: 200,
+          message: result,
         };
       }
       return Promise.resolve(response);
@@ -207,12 +206,12 @@ async function signinHandler(request) {
 function whoAmIHandler(request) {
   const customerId = getCustomerId(request);
   let message = "No current user";
-  let status = 401;
+  let code = 401;
   if (customerId !== "null" && customerId) {
     message = customerId;
-    status = 200;
+    code = 200;
   }
-  return Promise.resolve({ error: true, status, message });
+  return Promise.resolve({ error: true, code, message });
 }
 
 async function getImageHandler(request) {
