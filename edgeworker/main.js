@@ -2,11 +2,6 @@ import { logger } from "log";
 import { createResponse } from "create-response";
 import { executeHandler } from "./router.js";
 
-const URL = "https://mmgdn1.demo.macrometa.io";
-const API_KEY =
-  "fashionstore_macrometa.io.fashionstore.LxBhnHq7vSBNWLmb9d2pD4tLDwuMgyG6gKCOn6tWEVI1IKFzMswxckeaYtbmHlbp7f59fd";
-const FABRIC = "_system";
-
 export async function responseProvider(request) {
   let result = {};
   let body;
@@ -67,34 +62,3 @@ export function onClientResponse(request, response) {
 // Akamai-EW-Trace: st=1604825241~exp=1604828841~acl=/*~hmac=d1c3877b2498bd47e4012a2c63109fd0e2dab15ac6eeb3f3fdb525359ccf58bd
 
 // curl -i --header 'Host: fashionstore.demo.macrometa.io' 'http://127.0.0.1:9550/api/asadad' -H 'Pragma: akamai-x-ew-debug' -H 'Akamai-EW-Trace: st=1604825241~exp=1604828841~acl=/*~hmac=d1c3877b2498bd47e4012a2c63109fd0e2dab15ac6eeb3f3fdb525359ccf58bd'
-
-// let res;
-// try {
-//   res = await httpRequest(`${URL}/_fabric/${FABRIC}/_api/cursor`, {
-//     method: "POST",
-//     headers: {
-//       authorization: `apikey ${API_KEY}`,
-//     },
-//     body: JSON.stringify({
-//       query: "for dox in testColl return dox",
-//       bindVars: {},
-//     }),
-//   });
-//   if (res.ok) {
-//     res = await res.json();
-//   } else {
-//     res = {
-//       hasError: true,
-//       err: JSON.stringify(res),
-//       msg: res.statusText,
-//       status: res.status,
-//     };
-//   }
-// } catch (err) {
-//   res = {
-//     hasError: true,
-//     err: JSON.stringify(err),
-//     msg: err.message,
-//     body: err.body,
-//   };
-// }
