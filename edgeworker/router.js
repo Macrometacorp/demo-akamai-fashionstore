@@ -48,7 +48,7 @@ const pathHandlers = [
     },
   },
   {
-    regEx: ".*/api/fashion*",
+    regEx: ".*/api/fashionItems*",
     handlers: {
       GET: function (request) {
         return fashionItemHandler(request, "ListFashionItems");
@@ -56,7 +56,7 @@ const pathHandlers = [
     },
   },
   {
-    regEx: ".*/api/fashion/f[0-9]+",
+    regEx: ".*/api/fashionItems/f[0-9]+",
     handlers: {
       GET: function (request) {
         return fashionItemHandler(request, "GetFashionItem");
