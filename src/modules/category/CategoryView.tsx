@@ -10,7 +10,7 @@ import kids from "../../images/hero/hero-kids.png";
 import bags from "../../images/hero/hero-bags.png";
 import home from "../../images/hero/hero-homewear.jpg";
 import sports from "../../images/hero/hero-sportswear.png";
-import designers from "../../images/hero/hero-designers.png";
+// import designers from "../../images/hero/hero-designers.png";
 
 import "../../common/hero/hero.css";
 import { categories } from "./categoryNavBar/categories";
@@ -34,8 +34,8 @@ export default class CategoryView extends Component<CategoryViewProps> {
         return home;
       case categories.sports:
         return sports;
-      case categories.designers:
-        return designers;
+      // case categories.designers:
+      //   return designers;
       default:
         return men;
     }

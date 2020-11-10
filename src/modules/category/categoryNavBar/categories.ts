@@ -5,5 +5,5 @@ export const categories = {
   bags: "Bags",
   home: "Homewear",
   sports: "Sportswear",
-  designers: "Designers",
+  // designers: "Designers",
 }
