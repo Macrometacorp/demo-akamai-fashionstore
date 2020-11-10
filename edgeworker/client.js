@@ -1,13 +1,12 @@
 import { httpRequest } from "http-request";
 
-const URL = "https://mmgdn1.demo.macrometa.io";
-const API_KEY =
-  "fashionstore_macrometa.io.fashionstore.LxBhnHq7vSBNWLmb9d2pD4tLDwuMgyG6gKCOn6tWEVI1IKFzMswxckeaYtbmHlbp7f59fd";
+const URL = "https://vikas.eng.macrometa.io";
+const API_KEY = "fashionStore.G1dWFG3CJjutIMptrALrfc3XKXJKKJAE2PlR83uYoki4odiVziD9cJOplIOkA2LT4bd2f9";
 const FABRIC = "_system";
 
 const client = {
   executeQuery: function (query, bindVars) {
-    return httpRequest(`${URL}/_fabric/${FABRIC}/_api/cursor`, {
+    return fetch(`${URL}/_fabric/${FABRIC}/_api/cursor`, {
       method: "POST",
       headers: {
         authorization: `apikey ${API_KEY}`,
