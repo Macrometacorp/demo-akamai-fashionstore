@@ -1,9 +1,19 @@
 import URLSearchParams from "url-search-params";
 
+import { sha256 } from "js-sha256";
+
 import client from "./client.js";
 import queries from "./c8qls.js";
 
 const CUSTOMER_ID_HEADER = "x-customer-id";
+
+const uuidv4 = () => {
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+    var r = (Math.random() * 16) | 0,
+      v = c == "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+};
 
 const getLastPathParam = (request) => {
   const path = request.path;
@@ -153,29 +163,22 @@ async function searchHandler(request, c8qlKey) {
 }
 
 async function signupHandler(request) {
-  const { username, password } = await request.json();
+  const username = getQueryParam(request, "username");
+  const password = getQueryParam(request, "password");
+  const digestedPassword = sha256(password);
 
-  const encodedPassword = new TextEncoder().encode(password);
-
-  const digestedPassword = await crypto.subtle.digest(
-    {
-      name: "SHA-256",
-    },
-    encodedPassword // The data you want to hash as an ArrayBuffer
-  );
-  const passwordHash = new TextDecoder("utf-8").decode(digestedPassword);
-  const customerId = uuid();
-  const result = await executeQuery("signup", {
+  const customerId = uuidv4();
+  return executeQuery("signup", {
     username,
-    passwordHash,
+    passwordHash: digestedPassword,
     customerId,
   });
   if (!result.error) {
     const res = await executeQuery("AddFriends", { username });
   }
 
-  const body = JSON.stringify(result);
-  // return new Response(body, optionsObj);
+  // const body = JSON.stringify(result);
+  // // return new Response(body, optionsObj);
 }
 
 async function signinHandler(request) {
