@@ -22,6 +22,7 @@ export async function responseProvider(request) {
       body = response;
     } else if (response.body) {
       body = await response.json();
+      status = body.code ? body.code : status;
     } else if (response.text) {
       body = await response.text();
     } else {
