@@ -79,7 +79,7 @@ export class CartProductRow extends React.Component<
           <div className="media-left media-middle">
             <img
               className="media-object product-thumb"
-              src={`../../images/categories/${this.state.fashionItem["_key"]}.jpg`}
+              src={`${process.env.PUBLIC_URL}/categories/${this.state.fashionItem["_key"]}.jpg`}
               alt={`${this.state.fashionItem.name} cover`}
             />
           </div>

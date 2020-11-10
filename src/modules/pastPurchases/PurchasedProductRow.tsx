@@ -59,7 +59,7 @@ export class PurchasedProductRow extends React.Component<
           <div className="media-left media-middle">
             <img
               className="media-object product-thumb"
-              src={`../../images/categories/${this.state.fashionItem.fashionItemId}.jpg`}
+              src={`${process.env.PUBLIC_URL}/categories/${this.state.fashionItem.fashionItemId}.jpg`}
               alt={`${this.state.fashionItem.name} covers`}
             />
           </div>

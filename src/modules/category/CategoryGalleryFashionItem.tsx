@@ -22,7 +22,7 @@ export class CategoryGalleryFashionItem extends React.Component<
           </p>
           <img
             style={{ height: "200px", width: "150px" }}
-            src={`../../images/categories/${this.props.fashionItem["_key"]}.jpg`}
+            src={`${process.env.PUBLIC_URL}/categories/${this.props.fashionItem["_key"]}.jpg`}
             alt={`${this.props.fashionItem.name} cover`}
           />
           <div className="caption">
