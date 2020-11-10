@@ -9,11 +9,6 @@ export async function responseProvider(request) {
   try {
     const response = await executeHandler(request);
     status = response.code;
-    if (response.ok || response.code === 200) {
-      result.ok = true;
-    } else {
-      result.ok = false;
-    }
     if (
       response.message &&
       response.code &&
@@ -24,11 +19,16 @@ export async function responseProvider(request) {
       body = await response.json();
       status = body.code ? body.code : status;
     } else if (response.text) {
-      body = await response.text();
+      const text = await response.text();
+      body = { text };
     } else {
       body = { message: "Something unexpected" };
     }
-    result = { ...result, ...body };
+    if (body.result) {
+      result = body.result;
+    } else {
+      result = { ...body };
+    }
   } catch (e) {
     result.error = true;
     result.errorMessage = e.message;
