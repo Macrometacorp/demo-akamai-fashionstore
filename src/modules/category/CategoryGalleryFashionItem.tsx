@@ -9,7 +9,7 @@ interface CategoryGalleryFashionItemProps {
 }
 
 export class CategoryGalleryFashionItem extends React.Component<
-CategoryGalleryFashionItemProps
+  CategoryGalleryFashionItemProps
 > {
   render() {
     if (!this.props.fashionItem) return;
@@ -22,7 +22,7 @@ CategoryGalleryFashionItemProps
           </p>
           <img
             style={{ height: "200px", width: "150px" }}
-            src={`./api/getImage?fashionItemId=${this.props.fashionItem["_key"]}`}
+            src={`../../images/categories/${this.props.fashionItem["_key"]}.jpg`}
             alt={`${this.props.fashionItem.name} cover`}
           />
           <div className="caption">

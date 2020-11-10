@@ -15,12 +15,15 @@ interface PurchasedProductRowState {
   fashionItem: any;
 }
 
-export class PurchasedProductRow extends React.Component<PurchasedProductRowProps, PurchasedProductRowState> {
+export class PurchasedProductRow extends React.Component<
+  PurchasedProductRowProps,
+  PurchasedProductRowState
+> {
   constructor(props: PurchasedProductRowProps) {
     super(props);
 
     this.state = {
-      fashionItem: undefined
+      fashionItem: undefined,
     };
   }
 
@@ -54,10 +57,15 @@ export class PurchasedProductRow extends React.Component<PurchasedProductRowProp
       <div className="white-box">
         <div className="media">
           <div className="media-left media-middle">
-            <img className="media-object product-thumb" src={`./api/getImage?fashionItemId=${this.state.fashionItem.fashionItemId}`} alt={`${this.state.fashionItem.name} covers`} />
+            <img
+              className="media-object product-thumb"
+              src={`../../images/categories/${this.state.fashionItem.fashionItemId}.jpg`}
+              alt={`${this.state.fashionItem.name} covers`}
+            />
           </div>
           <div className="media-body">
-            <h3 className="media-heading">{this.state.fashionItem.name}
+            <h3 className="media-heading">
+              {this.state.fashionItem.name}
               <div className="pull-right margin-1">
                 <small>{`${this.props.order.quantity} @ ${this.state.fashionItem.price}`}</small>
               </div>
@@ -66,7 +74,11 @@ export class PurchasedProductRow extends React.Component<PurchasedProductRowProp
             {/* <FriendRecommendations fashionItemId={this.props.order.fashionItemId} /> */}
             <div>
               Rating
-              <AddToCart fashionItemId={this.state.fashionItem.fashionItemId} price={this.state.fashionItem.price} variant="buyAgain" />
+              <AddToCart
+                fashionItemId={this.state.fashionItem.fashionItemId}
+                price={this.state.fashionItem.price}
+                variant="buyAgain"
+              />
             </div>
             <StarRating stars={this.state.fashionItem.rating} />
           </div>
@@ -77,5 +89,3 @@ export class PurchasedProductRow extends React.Component<PurchasedProductRowProp
 }
 
 export default PurchasedProductRow;
-
-
