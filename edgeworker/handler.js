@@ -100,7 +100,6 @@ async function cartHandler(request, c8qlKey) {
 
 async function ordersHandler(request, c8qlKey) {
   const customerId = getCustomerId(request);
-  let body = { error: true, status: 400, message: "Customer Id not provided" };
   if (customerId) {
     let bindValue = { customerId };
     let orderDate = Date.now();
@@ -115,17 +114,13 @@ async function ordersHandler(request, c8qlKey) {
       shouldUpdatePurchased = true;
     }
     const checkoutPromise = executeQuery(c8qlKey, bindValue);
-    // if (shouldUpdatePurchased) {
-    //   return checkoutPromise.then(() => {
-    //     executeQuery("AddPurchased", { orderId });
-    //   });
-    // } else {
+    if (shouldUpdatePurchased) {
+      return checkoutPromise.then(() =>
+        executeQuery("AddPurchased", { orderId })
+      );
+    } else {
       return checkoutPromise;
-    // }
-
-    // if (shouldUpdatePurchased && !body.error) {
-    //   await executeQuery("AddPurchased", { orderId });
-    // }
+    }
   }
   return notLoggedIn();
 }

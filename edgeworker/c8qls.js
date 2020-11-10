@@ -108,7 +108,7 @@ const queries = (queryName, bindValue) => {
           LET userId = first(FOR user IN UsersTable FILTER user.customerId == customerId RETURN user._id)
           LET fashionItems = order.fashionItems
           FOR fashionItem IN fashionItems
-              INSERT {_from: userId, _to: fashionItem._id} INTO purchased`,
+              INSERT {_from: userId, _to: CONCAT("FashionItemsTable/",fashionItem.fashionItemId)} INTO purchased`,
         bindVars: bindValue,
       };
       break;

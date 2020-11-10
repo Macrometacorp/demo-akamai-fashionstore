@@ -95,7 +95,6 @@ const pathHandlers = [
         return ordersHandler(request, "ListOrders");
       },
       POST: function (request) {
-        // ABHISHEK: "AddPurchased"
         return ordersHandler(request, "Checkout");
       },
     },
