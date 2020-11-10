@@ -7,7 +7,7 @@ export async function responseProvider(request) {
   let body;
   try {
     const response = await executeHandler(request);
-    if (response.ok) {
+    if (response.ok || response.status === 200) {
       result.ok = true;
     } else {
       result.ok = false;

@@ -176,27 +176,32 @@ async function signupHandler(request) {
 }
 
 async function signinHandler(request) {
-  const { username, password } = await request.json();
-  const encodedPassword = new TextEncoder().encode(password);
-  const digestedPassword = await crypto.subtle.digest(
-    {
-      name: "SHA-256",
-    },
-    encodedPassword // The data you want to hash as an ArrayBuffer
-  );
-  const passwordHash = new TextDecoder("utf-8").decode(digestedPassword);
-  const result = await executeQuery("signin", {
+  const username = getQueryParam(request, "username");
+  const password = getQueryParam(request, "password");
+
+  const passwordHash = sha256(password);
+
+  return executeQuery("signin", {
     username,
     passwordHash,
-  });
-  let message = "User not found";
-  let status = 404;
-  if (result.length) {
-    message = result;
-    status = 200;
-  }
-  const body = JSON.stringify({ message });
-  // return new Response(body, { status, ...optionsObj });
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      const result = data.result;
+      let response = {
+        error: true,
+        status: 404,
+        message: "User not found",
+      };
+      if (result.length) {
+        response = {
+          error: false,
+          status: 200,
+          message: result[0],
+        };
+      }
+      return Promise.resolve(response);
+    });
 }
 
 function whoAmIHandler(request) {
