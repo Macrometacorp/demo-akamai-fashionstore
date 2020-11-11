@@ -1,16 +1,15 @@
 import { httpRequest } from "http-request";
 
-const URL = "https://mmgdn1.demo.macrometa.io";
-const API_KEY =
-  "fashionstore_macrometa.io.fashionstore.LxBhnHq7vSBNWLmb9d2pD4tLDwuMgyG6gKCOn6tWEVI1IKFzMswxckeaYtbmHlbp7f59fd";
+const C8_URL = "https://mmgdn1.demo.macrometa.io";
+const C8_API_KEY = "xxxx";
 const FABRIC = "_system";
 
 const client = {
   executeQuery: function (query, bindVars) {
-    return httpRequest(`${URL}/_fabric/${FABRIC}/_api/cursor`, {
+    return httpRequest(`${C8_URL}/_fabric/${FABRIC}/_api/cursor`, {
       method: "POST",
       headers: {
-        authorization: `apikey ${API_KEY}`,
+        authorization: `apikey ${C8_API_KEY}`,
       },
       body: JSON.stringify({
         query,
