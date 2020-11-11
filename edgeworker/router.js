@@ -1,7 +1,6 @@
 import URLSearchParams from "url-search-params";
 
 import {
-  initHandler,
   fashionItemHandler,
   cartHandler,
   ordersHandler,
@@ -11,18 +10,9 @@ import {
   signupHandler,
   signinHandler,
   whoAmIHandler,
-  getImageHandler,
 } from "./handler.js";
 
 const pathHandlers = [
-  {
-    regEx: ".*/api/init",
-    handlers: {
-      POST: function (request) {
-        return initHandler(request);
-      },
-    },
-  },
   {
     regEx: ".*/api/whoami",
     handlers: {
@@ -123,14 +113,6 @@ const pathHandlers = [
           request,
           "GetRecommendationsByFashionItem"
         );
-      },
-    },
-  },
-  {
-    regEx: ".*/api/getImage*",
-    handlers: {
-      GET: function (request) {
-        return getImageHandler(request);
       },
     },
   },

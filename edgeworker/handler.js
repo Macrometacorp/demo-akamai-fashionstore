@@ -48,20 +48,6 @@ const getCustomerId = (request) => {
   return header;
 };
 
-async function initHandler(request) {
-  let res;
-
-  try {
-    await init(client);
-    res = { code: "200", message: "Init successful" };
-  } catch (e) {
-    res = e;
-  } finally {
-    // ABHISHEK
-    // return new Response(JSON.stringify(res), optionsObj);
-  }
-}
-
 async function fashionItemHandler(request, c8qlKey) {
   let bindValue = getLastPathParam(request);
   const categoryQueryParam = getQueryParam(request, "category");
@@ -214,26 +200,7 @@ function whoAmIHandler(request) {
   return Promise.resolve({ error: true, code, message });
 }
 
-async function getImageHandler(request) {
-  // const queryParam = getLastPathParam(request);
-  // const fashionItemId = queryParam.split("?")[1].split("=")[1];
-  const fashionItemId = getQueryParam(request, "fashionItemId");
-  const res = await client.getValueForKey("ImagesKVTable", fashionItemId);
-  const base64Img = res.value;
-  // const response = new Response(decode(base64Img), {
-  //   headers: { "Content-Type": "image/jpeg" },
-  // });
-
-  // const res = await BOOK_IMAGES.get(fashionItemId, "arrayBuffer");
-  // const response = new Response(res, {
-  //   headers: { "Content-Type": "image/jpeg" },
-  // });
-
-  // return response;
-}
-
 export {
-  initHandler,
   fashionItemHandler,
   cartHandler,
   ordersHandler,
@@ -243,5 +210,4 @@ export {
   signupHandler,
   signinHandler,
   whoAmIHandler,
-  getImageHandler,
 };
