@@ -5,34 +5,37 @@ import { executeHandler } from "./router.js";
 export async function responseProvider(request) {
   let result = {};
   let body;
+  let status = 501;
   try {
     const response = await executeHandler(request);
-    if (response.ok) {
-      result.ok = true;
-    } else {
-      result.ok = false;
-    }
-    if (
+    status = response.code;
+    if (response.body) {
+      body = await response.json();
+      status = body.code ? body.code : status;
+    } else if (
       response.message &&
-      response.status &&
+      response.code &&
       Object.keys(response).length === 3
     ) {
       body = response;
-    } else if (response.body) {
-      body = await response.json();
     } else if (response.text) {
-      body = await response.text();
+      const text = await response.text();
+      body = { text };
     } else {
       body = { message: "Something unexpected" };
     }
-    result = { ...result, ...body };
+    if (body.result) {
+      result = body.result;
+    } else {
+      result = { ...body };
+    }
   } catch (e) {
     result.error = true;
     result.errorMessage = e.message;
   }
   return Promise.resolve(
     createResponse(
-      200,
+      status,
       {
         headers: {
           "Content-Type": ["application/json"],

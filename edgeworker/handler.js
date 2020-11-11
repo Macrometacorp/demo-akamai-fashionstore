@@ -1,9 +1,19 @@
 import URLSearchParams from "url-search-params";
 
+import { sha256 } from "js-sha256";
+
 import client from "./client.js";
 import queries from "./c8qls.js";
 
 const CUSTOMER_ID_HEADER = "x-customer-id";
+
+const uuidv4 = () => {
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+    var r = (Math.random() * 16) | 0,
+      v = c == "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+};
 
 const getLastPathParam = (request) => {
   const path = request.path;
@@ -19,7 +29,7 @@ const getQueryParam = (request, key) => {
 const notLoggedIn = () =>
   Promise.resolve({
     error: true,
-    status: 401,
+    code: 401,
     message: "No current user",
   });
 
@@ -43,7 +53,7 @@ async function initHandler(request) {
 
   try {
     await init(client);
-    res = { status: "200", message: "Init successful" };
+    res = { code: "200", message: "Init successful" };
   } catch (e) {
     res = e;
   } finally {
@@ -131,7 +141,6 @@ async function bestSellersHandler(request, c8qlKey) {
 
 async function recommendationsHandler(request, c8qlKey) {
   const customerId = getCustomerId(request);
-  let body = { error: true, status: 400, message: "Customer Id not provided" };
   if (customerId) {
     let bindValue = { customerId };
     if (c8qlKey === "GetRecommendationsByFashionItem") {
@@ -153,64 +162,56 @@ async function searchHandler(request, c8qlKey) {
 }
 
 async function signupHandler(request) {
-  const { username, password } = await request.json();
+  const username = getQueryParam(request, "username");
+  const password = getQueryParam(request, "password");
+  const digestedPassword = sha256(password);
 
-  const encodedPassword = new TextEncoder().encode(password);
-
-  const digestedPassword = await crypto.subtle.digest(
-    {
-      name: "SHA-256",
-    },
-    encodedPassword // The data you want to hash as an ArrayBuffer
-  );
-  const passwordHash = new TextDecoder("utf-8").decode(digestedPassword);
-  const customerId = uuid();
-  const result = await executeQuery("signup", {
+  const customerId = uuidv4();
+  return executeQuery("signup", {
     username,
-    passwordHash,
+    passwordHash: digestedPassword,
     customerId,
-  });
-  if (!result.error) {
-    const res = await executeQuery("AddFriends", { username });
-  }
-
-  const body = JSON.stringify(result);
-  // return new Response(body, optionsObj);
+  }).then(() => executeQuery("AddFriends", { username }));
 }
 
 async function signinHandler(request) {
-  const { username, password } = await request.json();
-  const encodedPassword = new TextEncoder().encode(password);
-  const digestedPassword = await crypto.subtle.digest(
-    {
-      name: "SHA-256",
-    },
-    encodedPassword // The data you want to hash as an ArrayBuffer
-  );
-  const passwordHash = new TextDecoder("utf-8").decode(digestedPassword);
-  const result = await executeQuery("signin", {
+  const username = getQueryParam(request, "username");
+  const password = getQueryParam(request, "password");
+
+  const passwordHash = sha256(password);
+
+  return executeQuery("signin", {
     username,
     passwordHash,
-  });
-  let message = "User not found";
-  let status = 404;
-  if (result.length) {
-    message = result;
-    status = 200;
-  }
-  const body = JSON.stringify({ message });
-  // return new Response(body, { status, ...optionsObj });
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      const result = data.result;
+      let response = {
+        error: true,
+        code: 404,
+        message: "User not found",
+      };
+      if (result.length) {
+        response = {
+          error: false,
+          code: 200,
+          message: result,
+        };
+      }
+      return Promise.resolve(response);
+    });
 }
 
 function whoAmIHandler(request) {
   const customerId = getCustomerId(request);
   let message = "No current user";
-  let status = 401;
+  let code = 401;
   if (customerId !== "null" && customerId) {
     message = customerId;
-    status = 200;
+    code = 200;
   }
-  return Promise.resolve({ error: true, status, message });
+  return Promise.resolve({ error: true, code, message });
 }
 
 async function getImageHandler(request) {

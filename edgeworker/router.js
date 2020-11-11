@@ -48,7 +48,7 @@ const pathHandlers = [
     },
   },
   {
-    regEx: ".*/api/fashion*",
+    regEx: ".*/api/fashionItems*",
     handlers: {
       GET: function (request) {
         return fashionItemHandler(request, "ListFashionItems");
@@ -56,7 +56,7 @@ const pathHandlers = [
     },
   },
   {
-    regEx: ".*/api/fashion/f[0-9]+",
+    regEx: ".*/api/fashionItems/f[0-9]+",
     handlers: {
       GET: function (request) {
         return fashionItemHandler(request, "GetFashionItem");
@@ -159,9 +159,9 @@ const executeHandler = (request) => {
   const handler = handlerObj && handlerObj.handlers[method];
 
   if (!handlerObj || !handler || typeof handler !== "function") {
-    // ABHISHEK: return 404
     return Promise.resolve({
-      status: 404,
+      error: true,
+      code: 404,
       message: `No handler for ${path}?method=${method}`,
     });
   } else {

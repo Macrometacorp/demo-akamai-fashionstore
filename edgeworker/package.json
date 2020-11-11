@@ -5,12 +5,15 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "buildOld": "rm -rf dist && rollup -c && cd dist/work && tar -czvf ../fashionstore.tgz *",
-    "build": "rm -rf fashionstore.tgz && tar -czvf fashionstore.tgz main.js router.js handler.js client.js c8qls.js bundle.json && akamai sandbox update-edgeworker 4692 fashionstore.tgz"
+    "buildOld": "rm -rf fashionstore.tgz && tar -czvf fashionstore.tgz main.js router.js handler.js client.js c8qls.js bundle.json && npm run updateSandbox",
+    "build": "rm -rf dist && rollup -c && cd dist/work && tar -czvf ../fashionstore.tgz * && npm run updateSandbox",
+    "updateSandbox": "cd dist && echo ${PWD} && akamai sandbox update-edgeworker 4692 fashionstore.tgz"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "js-sha256": "^0.9.0"
+  },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^16.0.0",
     "@rollup/plugin-node-resolve": "^10.0.0",
