@@ -326,6 +326,15 @@ const COLLECTIONS = [
   },
 ];
 
+/**
+ * INDEXES:
+ * BestsellersTable - quantity
+ * CartTable - customerId
+ * FashionItemsTable - category
+ * OrdersTable - customerId
+ * UsersTable - customerId (unique)
+ */ 
+
 const EDGE_COLLECTIONS = [
   {
     name: "friend",
