@@ -38,7 +38,7 @@ export class CategoryGalleryTeaser extends React.Component<
   }
 
   listFashionItems() {
-    return API.get("fashionItems", "/fashionItems?category=Men", null);
+    return API.get("fashionItems", "/fashionItems?category=Women", null);
   }
 
   render() {
