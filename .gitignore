@@ -3,3 +3,4 @@
 edgeworker/node_modules
 edgeworker/dist
 .DS_Store
+edgeworker/init-script/node_modules
