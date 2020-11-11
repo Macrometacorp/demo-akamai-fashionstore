@@ -1,8 +1,7 @@
 import { httpRequest } from "http-request";
 
 const URL = "https://mmgdn1.demo.macrometa.io";
-const API_KEY =
-  "fashionstore_macrometa.io.fashionstore.LxBhnHq7vSBNWLmb9d2pD4tLDwuMgyG6gKCOn6tWEVI1IKFzMswxckeaYtbmHlbp7f59fd";
+const API_KEY = "xxxx";
 const FABRIC = "_system";
 
 const client = {
