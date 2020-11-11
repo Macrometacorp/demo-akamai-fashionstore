@@ -34,7 +34,7 @@ const COLLECTIONS = [
         _key: "f4",
         category: "Bags",
         name:
-          "The Clownfish Regal Sling Bag, Sling Bag for Travel, Sling Bag for Men,Sling Bag for Women, Side Bag for Girls, Side Bag for Men, Messenger Bag, Tablet Bag (Chocolate) (TCFSLFL-ICHO3)",
+          "The Clownfish Regal Sling Bag, Sling Bag for Travel, Sling Bag",
         price: 8.57,
         rating: 4.2,
       },
@@ -50,7 +50,7 @@ const COLLECTIONS = [
         _key: "f6",
         category: "Designer",
         name:
-          "Ecosunny Women's Deep V Neck Short Sleeve Floral Lace Bridesmaid Maxi Dress Party Gown",
+          "Ecosunny Deep V Neck Short Sleeve Floral Lace",
         price: 44.99,
         rating: 3.7,
       },
@@ -58,7 +58,7 @@ const COLLECTIONS = [
         _key: "f7",
         category: "Designer",
         name:
-          "Miss Chase Women's Black Designer Cap Sleeves Pearl Detailing Lace Skater Mini Dress",
+          "Miss Chase Black Designer Sleeves Pearl",
         price: 20.99,
         rating: 4,
       },
@@ -66,7 +66,7 @@ const COLLECTIONS = [
         _key: "f8",
         category: "Designer",
         name:
-          "TORARY Womens Long Sleeves Peter Pan Collar Aline Fit and Flare Wednesday Addam Dresses",
+          "Long Sleeves Peter Pan Collar Aline Fit and Flare",
         price: 26.99,
         rating: 4.6,
       },
@@ -80,7 +80,7 @@ const COLLECTIONS = [
       {
         _key: "f10",
         category: "Designer",
-        name: "NNJXD Girl Dress Kids Ruffles Lace Party Wedding Dresses",
+        name: "NNJXD Ruffles Lace Party Wedding Dresses",
         price: 22.99,
         rating: 4.4,
       },
@@ -88,21 +88,21 @@ const COLLECTIONS = [
         _key: "f11",
         category: "Homewear",
         name:
-          "VIMAL JONNEY Women's Regular Fit Cotton Short for Gym and Home Wear-N8_Anthra_01",
+          "Regular Fit Cotton Short for Gym and Home",
         price: 6.07,
         rating: 4,
       },
       {
         _key: "f12",
         category: "Homewear",
-        name: "Amazon Brand - Eden & Ivy Women's Pyjama Top",
+        name: "Eden & Ivy Women's Pyjama Top",
         price: 17.29,
         rating: 4.3,
       },
       {
         _key: "f13",
         category: "Homewear",
-        name: "Chromozome Men's Plain Regular Fit T-Shirt (Pack Of 3)",
+        name: "Plain Regular Fit T-Shirt (Pack Of 3)",
         price: 13.49,
         rating: 4,
       },
@@ -117,7 +117,7 @@ const COLLECTIONS = [
         _key: "f15",
         category: "Homewear",
         name:
-          "minicult Cotton Baby Pajama Pants Unisex with Rib (Pack of 6) (Assorted Multicolor Prints) (4-5 Years, Multi Color)",
+          "minicult Cotton Pajama Pants Unisex (Pack of 6)",
         price: 18.1,
         rating: 3.3,
       },
@@ -131,7 +131,7 @@ const COLLECTIONS = [
       {
         _key: "f17",
         category: "Kids",
-        name: "More & More Men's & Women's Cotton Hooded Hoodie",
+        name: "More & More Cotton Hooded Hoodie",
         price: 10.81,
         rating: 4,
       },
@@ -159,7 +159,7 @@ const COLLECTIONS = [
       {
         _key: "f21",
         category: "Men",
-        name: "Amazon Brand - Inkast Denim Co. Men's Slim Fit Casual Shirts",
+        name: "Inkast Denim Co. Men's Slim Fit Casual Shirts",
         price: 28.11,
         rating: 4.2,
       },
@@ -174,7 +174,7 @@ const COLLECTIONS = [
         _key: "f23",
         category: "Men",
         name:
-          "LEVIZO Cotton Checkered Casual Classic Regular Fit Full Sleeves Shirt for Men",
+          "LEVIZO Cotton Checkered Casual Classic Regular Fit",
         price: 7.7,
         rating: 4.1,
       },
@@ -217,7 +217,7 @@ const COLLECTIONS = [
         _key: "f29",
         category: "Sportswear",
         name:
-          "Fitg18® Gym wear Leggings Ankle Length Free Size Combo Workout Trousers | Stretchable Striped Jeggings | Yoga Track Pants for Girls & Women (Pack of 2-Free Size 28-34 Inch)",
+          "Fitg18® Gym wear Leggings Ankle Length Free Size Combo Workout Trousers",
         price: 22.99,
         rating: 3.8,
       },
