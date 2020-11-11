@@ -9,15 +9,15 @@ export async function responseProvider(request) {
   try {
     const response = await executeHandler(request);
     status = response.code;
-    if (
+    if (response.body) {
+      body = await response.json();
+      status = body.code ? body.code : status;
+    } else if (
       response.message &&
       response.code &&
       Object.keys(response).length === 3
     ) {
       body = response;
-    } else if (response.body) {
-      body = await response.json();
-      status = body.code ? body.code : status;
     } else if (response.text) {
       const text = await response.text();
       body = { text };
