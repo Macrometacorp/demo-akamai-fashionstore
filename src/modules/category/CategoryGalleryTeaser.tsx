@@ -49,10 +49,10 @@ export class CategoryGalleryTeaser extends React.Component<
         <div className="well-bs no-padding-top col-md-12 no-radius">
           <div className="container-category">
             <h3>
-              Men's Fashion{" "}
+              Women's Fashion{" "}
               <small>
-                <LinkContainer to="/category/Men">
-                  <a>Browse Men's Fashion</a>
+                <LinkContainer to="/category/Women">
+                  <a>Browse Women's Fashion</a>
                 </LinkContainer>
               </small>
             </h3>

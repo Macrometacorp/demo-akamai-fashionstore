@@ -1,6 +1,6 @@
 export const categories = {
-  men: "Men",
   women: "Women",
+  men: "Men",
   kids: "Kids",
   bags: "Bags",
   home: "Homewear",
