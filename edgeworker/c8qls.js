@@ -65,7 +65,7 @@ const queries = (queryName, bindValue) => {
     case "UpdateCart":
       queryObj = {
         query:
-          'FOR item IN CartTable UPDATE {_key: CONCAT_SEPARATOR(":", @customerId, @fashionItemId),quantity: @quantity} IN CartTable',
+          'UPDATE {_key: CONCAT_SEPARATOR(":", @customerId, @fashionItemId),quantity: @quantity} IN CartTable',
         bindVars: bindValue,
       };
       break;
@@ -93,11 +93,15 @@ const queries = (queryName, bindValue) => {
       break;
     case "Checkout":
       queryObj = {
-        query: `LET items = (FOR item IN CartTable FILTER item.customerId == @customerId RETURN item)
-          LET fashionItems = (FOR item in items
-              FOR fashionItem in FashionItemsTable FILTER fashionItem._key == item.fashionItemId return {fashionItemId:fashionItem._key ,category:fashionItem.category,name:fashionItem.name,price:fashionItem.price,rating:fashionItem.rating,quantity:item.quantity})
-          INSERT {_key: @orderId, customerId: @customerId, fashionItems: fashionItems, orderDate: @orderDate} INTO OrdersTable
-          FOR item IN items REMOVE item IN CartTable`,
+        query: `LET fashionItems = (
+          FOR item IN CartTable
+              FILTER item.customerId == @customerId
+              REMOVE item IN CartTable
+              FOR fashionItem in FashionItemsTable
+                  FILTER fashionItem._key == OLD.fashionItemId
+                  RETURN {fashionItemId:fashionItem._key,category:fashionItem.category,name:fashionItem.name,price:fashionItem.price,rating:fashionItem.rating,quantity:OLD.quantity}
+      )
+      INSERT {_key: @orderId, customerId: @customerId, fashionItems: fashionItems, orderDate: @orderDate} INTO OrdersTable`,
         bindVars: bindValue,
       };
       break;
