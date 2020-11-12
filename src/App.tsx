@@ -26,7 +26,7 @@ class App extends Component<AppProps, AppState> {
       isAuthenticating: true,
     };
 
-    document.title = "Edge Commerce Demo";
+    document.title = "Fashion Store";
   }
 
   async componentDidMount() {
