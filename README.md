@@ -4,7 +4,7 @@
 
 http://fashionstore.demo.macrometa.io/
 
-![alt text](https://github.com/Macrometacorp/tutorial-akamai-fashionstore/blob/master/ecommerce.png)
+![Fasion store sample image](./ecommerce.png)
 
 Macrometa-Akamai Fashionstore Demo App is a full-stack e-commerce web application that creates a storefront (and backend) for customers to shop for "fictitious" fashion clothing & accessories. Originally based on the AWS bookstore template app (https://github.com/aws-samples/aws-bookstore-demo-app), this demo replaces all AWS services like DynamoDB, Neptune, elastic search, lambda etc with Macrometa's geo distributed data platform which provides a K/V store, DynamoDB compatible document database, graph database, streams and event processing along with Akamai workers for the globally distributed functions as a service.
 
