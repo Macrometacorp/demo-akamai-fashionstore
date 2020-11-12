@@ -141,10 +141,11 @@ const queries = (queryName, bindValue) => {
       queryObj = {
         query: `LET userId = first(FOR user in UsersTable FILTER user.customerId == @customerId return user._id)
         LET fashionItemId = CONCAT("FashionItemsTable/",@fashionItemId)
-        FOR friendsPurchased IN INBOUND fashionItemId purchased
+        LET recommendedUsers = (FOR friendsPurchased IN INBOUND fashionItemId purchased
             FOR user IN ANY userId friend
                 FILTER user._key == friendsPurchased._key
-                    RETURN user`,
+                    RETURN user)
+        RETURN LENGTH(recommendedUsers)`,
         bindVars: bindValue,
       };
       break;
