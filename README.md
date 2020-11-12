@@ -55,6 +55,8 @@ BestsellersTable - document collection
 
 # Deploying edgeworker
 
+> Note: Remember to supply correct value to the variable `C8_API_KEY` in `client.js`.
+
 The edgeworker code is contained in the `edgeworker` folder.
 Execute `npm i && npm run build`. This will create a `dist` folder with `fashionstore.tgz` in it. Upload this file to the Akamai control center in the `Edgeworker` section.
 
