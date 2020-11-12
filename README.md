@@ -51,7 +51,7 @@ BestsellersTable - document collection
 
 # 1. CDN - Akamai CDN to cache static assets
 
-# 2. Workers - Backend talking with C8
+# 2. Workers - Backend talking with GDN
 
 # Deploying edgeworker
 
@@ -70,7 +70,7 @@ More info can be found [here](https://developer.akamai.com/cli).
 # Working with the UI
 The UI code is at the `root` of the repo. Run `npm run buildProd` to generate the UI build with no source maps. Run `npm run build` if you want to have source maps in the UI build.
 
-# Initialising C8DB with init data
+# Initialising GDN with init data
 
 Once you have deployed the edgeworker successfully, you will need to initialize some init data. There is a simple node script in `init-script` folder contained in the `edgeworker` folder. Execute the node script by running `npm i && node init.js`.
 
