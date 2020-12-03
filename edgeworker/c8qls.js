@@ -122,8 +122,9 @@ const queries = (queryName, bindValue) => {
         // query:
         //   "FOR fashionItem in BestsellersTable SORT fashionItem.quantity DESC LIMIT 20 return fashionItem._key",
         query: `FOR bestseller in BestsellersTable
-          FOR fashionItem in FashionItemsTable
-              FILTER bestseller._key == fashionItem._key SORT bestseller.quantity DESC LIMIT 20 RETURN fashionItem`,
+        SORT bestseller.quantity DESC
+        FOR fashionItem in FashionItemsTable
+            FILTER bestseller._key == fashionItem._key LIMIT 20 RETURN fashionItem`,
         bindVars: {},
       };
       break;
