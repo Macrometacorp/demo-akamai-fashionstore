@@ -1,4 +1,4 @@
-# Macrometa Akamai e-commerce template app
+# Macrometa Akamai e-commerce At the Edge demonstrator app
 
 # Play with a live demo 👇
 
@@ -6,7 +6,7 @@ http://fashionstore.demo.macrometa.io/
 
 ![Fasion store sample image](./ecommerce.png)
 
-Macrometa-Akamai Fashionstore Demo App is a full-stack e-commerce web application that creates a storefront (and backend) for customers to shop for "fictitious" fashion clothing & accessories. Originally based on the AWS bookstore template app (https://github.com/aws-samples/aws-bookstore-demo-app), this demo replaces all AWS services like DynamoDB, Neptune, elastic search, lambda etc with Macrometa's geo distributed data platform which provides a K/V store, DynamoDB compatible document database, graph database, streams and event processing along with Akamai workers for the globally distributed functions as a service.
+Macrometa-Akamai Fashionstore Demo App is a full-stack e-commerce web application that creates a storefront (and backend) for customers to shop for "fictitious" fashion clothing & accessories called Edge & M. Originally based on the AWS bookstore template app (https://github.com/aws-samples/aws-bookstore-demo-app), this demo replaces all AWS services like DynamoDB, Neptune, elastic search, lambda etc with Macrometa's geo distributed data platform which provides a K/V store, DynamoDB compatible document database, graph database, streams and event processing along with Akamai workers for the globally distributed functions as a service.
 
 Unlike typical cloud platforms like AWS where the backend stack runs in a single region, Macrometa and Akamai let you build stateful distributed microservices that run in 100s of regions around the world concurrently. The application logic runs in akamai's low latency function as a service runtime on akamai PoPs and make stateful data requests to the closest Macrometa region. End to end latency for P90 is < 55ms from almost everywhere in the world.
 
