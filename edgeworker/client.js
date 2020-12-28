@@ -1,6 +1,6 @@
 import { httpRequest } from "http-request";
 
-const C8_URL = "https://mmgdn1.demo.macrometa.io";
+const C8_URL = "https://mmgdn.demo.macrometa.io";
 const C8_API_KEY = "xxxx";
 const FABRIC = "_system";
 
