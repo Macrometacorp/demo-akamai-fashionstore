@@ -78,3 +78,19 @@ Once you have deployed the edgeworker successfully, you will need to initialize 
 
 1. Now login to the tenant and activate the stream app.
 2. Edit and save the VIEW with the correct data if not initialised properly. Details can be found in init.js
+
+## Database Indexes for different collections
+
+1. BestsellersTable - `quantity`
+
+2. CartTable - Single index on `customerId, fashionItemId`
+
+3. FashionItemsTable - `category`
+
+4. friend
+
+5. OrdersTable - `customerId`
+
+6. purchased
+
+7. UsersTable - `customerId`
