@@ -331,7 +331,18 @@ set BestsellersTable.quantity = quantity, BestsellersTable._key = _key
 on BestsellersTable._key == _key;
 ```
 
+# Code Overview
+
+`Frontend` - it is the code contained at the root of this repo
+`Backend` - it is in the `edgeworker` folder. `edgeworker` folder also contains the `init-script` folder which is a simple node script to make it easy to get started with this demo by creating the required collections, streams, etc on the GDN federation.
+
+The requests which come to the `responseProvider` communicate with Macrometa GDN to provide the backend functionality - calls with `/api/` get routed to the edge worker in our case, rest all are considered as calls to the UI assets and are handled as such. You can configure your Akamai property to behave differently and change the code accordingly.
+
+`responseProvider(main.js)` calls the `executeHandler(router.js)` to handle the requests. In `router.js` we have different handler functions defined for different path regex.
+The individual handler functions are defined in `handler.js`. Functions inside this files get the appropriate C8QLs from the `c8qls.js` file. Once we have the C8QL REST call is made to `/cursor` API with the C8QL and the `bind variables` in the body of the request and the response is returned.
+
 # Starting with development
+
 ## Initialising GDN with init data
 
 Once you have deployed the edgeworker successfully, you will need to initialize some init data. There is a simple node script in `init-script` folder contained in the `edgeworker` folder. Execute the node script by running `npm i && node init.js`.
