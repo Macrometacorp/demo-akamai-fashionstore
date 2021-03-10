@@ -7,32 +7,32 @@ Macrometa-Akamai Fashionstore Demo App is a full-stack e-commerce web applicatio
 ![Fasion store sample image](./ecommerce.png)
 
 
-
 Originally based on the AWS bookstore template app (https://github.com/aws-samples/aws-bookstore-demo-app), this demo replaces all AWS services like below
+
 * AWS DynamoDB, 
 * AWS Neptune (Graphs), 
 * AWS ElasticSearch (Search), 
 * AWS Lambda 
 * AWS Kinesis 
 
-This demo uses Macrometa's geo distributed data platform which provides a K/V store, DynamoDB compatible document database, graph database, streams and event processing along with Akamai workers for the globally distributed functions as a service.
+This demo uses Macrometa's geo distributed data platform which provides a `K/V store`, `DynamoDB compatible document database`, `graph database`, `streams` and `stream processing` along with Akamai `edgeworkers` for the globally distributed functions as a service.
 
 Unlike typical cloud platforms like AWS, where the backend stack runs in a single region, Macrometa and Akamai let you build `stateful distributed microservices that run in 100s of regions around the world concurrently`. The application logic runs in akamai's low latency function as a service runtime on akamai PoPs and make stateful data requests to the closest Macrometa region. End to end latency for `P90 is < 55ms` from almost everywhere in the world.
 
 As a user of the demo, you can browse and search for fashion clothing & accessories, look at recommendations and best sellers, manage your cart, checkout, view your orders, and more.
 
-## GDN Account
+## GDN Tenant Account
 
 | **Federation**                                        | **Email**                 | **Passsword** |
 | ----------------------------------------------------- | ------------------------- | ------------- |
 | [Global Data Network](https://gdn.paas.macrometa.io/) | fashionstore@macrometa.io | `xxxxxxxx`    |
 
 
-## Summary diagram
+## Architecture
 
 ![Fashionstore Arch](./fashionstore_summary_diagram.png)
 
-## High-level, end-to-end diagram
+## Data & Control Flows
 
 ![Fashionstore End to End](./fashionstore_end_to_end.png)
 
@@ -142,142 +142,175 @@ Below are the list of APIs being used.
 
 * GET /search (Search)
 
-### C8QLs
+## Queries
 
 C8QLs are used by the Akamai workers in `ResponseProvider` to communicate with Macrometa GDN.
 
-**signup**
+**signup**:
 
 ```js
-INSERT {_key: @username, password: @passwordHash, customerId: @customerId} INTO UsersTable
+    INSERT {_key: @username, password: @passwordHash, customerId: @customerId} INTO UsersTable
 ```
 
-**AddFriends**
+**signin**:
 
 ```js
-LET otherUsers = (FOR users in UsersTable FILTER users._key != @username RETURN users) FOR user in otherUsers INSERT { _from: CONCAT("UsersTable/",@username), _to: CONCAT("UsersTable/",user._key) } INTO friend
+    FOR user in UsersTable 
+        FILTER user._key == @username 
+            AND user.password == @passwordHash 
+        RETURN user.customerId
 ```
 
-**signin**
+**AddFriends**:
 
 ```js
-FOR user in UsersTable FILTER user._key == @username AND user.password == @passwordHash RETURN user.customerId
+    LET otherUsers = (
+        FOR users in UsersTable 
+        FILTER users._key != @username RETURN users
+    ) 
+    
+    FOR user in otherUsers 
+        INSERT { _from: CONCAT("UsersTable/",@username), _to: CONCAT("UsersTable/",user._key) } 
+        INTO friend
 ```
 
-**ListFashionItems**
+**ListFashionItems**:
 
 ```js
-FOR fashionItem IN FashionItemsTable RETURN fashionItem
+    FOR fashionItem IN FashionItemsTable 
+        RETURN fashionItem
 ```
 
 OR
 
 ```js
-FOR fashionItem IN FashionItemsTable filter fashionItem.category == @category RETURN fashionItem
+    FOR fashionItem IN FashionItemsTable 
+        FILTER fashionItem.category == @category 
+        RETURN fashionItem
 ```
 
-**GetFashionItem**
+**GetFashionItem**:
 
 ```js
-FOR fashionItem in FashionItemsTable FILTER fashionItem._key == @fashionItemId RETURN fashionItem
-```
-
-**ListItemsInCart**
-
-```js
-FOR item IN CartTable FILTER item.customerId == @customerId
-    FOR fashionItem in FashionItemsTable FILTER fashionItem._key == item.fashionItemId RETURN {order: item, fashionItem: fashionItem}
-```
-
-**AddToCart**
-
-```js
-UPSERT { _key: CONCAT_SEPARATOR(":", @customerId, @fashionItemId) }
-INSERT { _key: CONCAT_SEPARATOR(":", @customerId, @fashionItemId),customerId: @customerId, fashionItemId: @fashionItemId, quantity: @quantity, price: @price }
-UPDATE { quantity: OLD.quantity + @quantity } IN CartTable
-```
-
-**UpdateCart**
-
-```js
-UPDATE {_key: CONCAT_SEPARATOR(":", @customerId, @fashionItemId),quantity: @quantity} IN CartTable
-```
-
-**RemoveFromCart**
-
-```js
-REMOVE {_key: CONCAT_SEPARATOR(":", @customerId, @fashionItemId)} IN CartTable
-```
-
-**GetCartItem**
-
-```js
-FOR item IN CartTable FILTER item.customerId == @customerId AND item.fashionItemId == @fashionItemId RETURN item
-```
-
-**ListOrders**
-
-```js
-FOR item IN OrdersTable FILTER item.customerId == @customerId RETURN item",
-bindValue
-```
-
-**Checkout**
-
-```js
-LET fashionItems = (
-FOR item IN CartTable
-    FILTER item.customerId == @customerId
-    REMOVE item IN CartTable
     FOR fashionItem in FashionItemsTable
-        FILTER fashionItem._key == OLD.fashionItemId
-        RETURN {fashionItemId:fashionItem._key,category:fashionItem.category,name:fashionItem.name,price:fashionItem.price,rating:fashionItem.rating,quantity:OLD.quantity}
-)
-INSERT {_key: @orderId, customerId: @customerId, fashionItems: fashionItems, orderDate: @orderDate} INTO OrdersTable
+        FILTER fashionItem._key == @fashionItemId 
+        RETURN fashionItem
 ```
 
-**AddPurchased**
+**ListItemsInCart**:
 
 ```js
-LET order = first(FOR order in OrdersTable FILTER order._key == @orderId RETURN {customerId: order.customerId, fashionItems: order.fashionItems})
-LET customerId = order.customerId
-LET userId = first(FOR user IN UsersTable FILTER user.customerId == customerId RETURN user._id)
-LET fashionItems = order.fashionItems
-FOR fashionItem IN fashionItems
-    INSERT {_from: userId, _to: CONCAT("FashionItemsTable/",fashionItem.fashionItemId)} INTO purchased
+    FOR item IN CartTable 
+        FILTER item.customerId == @customerId
+        FOR fashionItem in FashionItemsTable 
+            FILTER fashionItem._key == item.fashionItemId 
+            RETURN {order: item, fashionItem: fashionItem}
 ```
 
-**GetBestSellers**
+**AddToCart**:
 
 ```js
-FOR bestseller in BestsellersTable
+    UPSERT { _key: CONCAT_SEPARATOR(":", @customerId, @fashionItemId) }
+    INSERT { _key: CONCAT_SEPARATOR(":", @customerId, @fashionItemId),customerId: @customerId, fashionItemId: @fashionItemId, quantity: @quantity, price: @price }
+    UPDATE { quantity: OLD.quantity + @quantity } IN CartTable
+```
+
+**UpdateCart**:
+
+```js
+    UPDATE {_key: CONCAT_SEPARATOR(":", @customerId, @fashionItemId),quantity: @quantity} IN CartTable
+```
+
+**RemoveFromCart**:
+
+```js
+    REMOVE {_key: CONCAT_SEPARATOR(":", @customerId, @fashionItemId)} IN CartTable
+```
+
+**GetCartItem**:
+
+```js
+    FOR item IN CartTable 
+        FILTER item.customerId == @customerId 
+           AND item.fashionItemId == @fashionItemId 
+        RETURN item
+```
+
+**ListOrders**:
+
+```js
+    FOR item IN OrdersTable 
+        FILTER item.customerId == @customerId 
+        RETURN item",
+```
+
+**Checkout**:
+
+```js
+    LET fashionItems = (
+        FOR item IN CartTable
+            FILTER item.customerId == @customerId
+            REMOVE item IN CartTable
+            FOR fashionItem in FashionItemsTable
+                FILTER fashionItem._key == OLD.fashionItemId
+                RETURN {fashionItemId:fashionItem._key,category:fashionItem.category,name:fashionItem.name,price:fashionItem.price,rating:fashionItem.rating,quantity:OLD.quantity}
+    )
+    
+    INSERT {_key: @orderId, customerId: @customerId, fashionItems: fashionItems, orderDate: @orderDate} INTO OrdersTable
+```
+
+**AddPurchased**:
+
+```js
+    LET order = first(FOR order in OrdersTable FILTER order._key == @orderId RETURN {customerId: order.customerId, fashionItems: order.fashionItems})
+    LET customerId = order.customerId
+    LET userId = first(FOR user IN UsersTable FILTER user.customerId == customerId RETURN user._id)
+    LET fashionItems = order.fashionItems
+    FOR fashionItem IN fashionItems
+        INSERT {_from: userId, _to: CONCAT("FashionItemsTable/",fashionItem.fashionItemId)} INTO purchased
+```
+
+**GetBestSellers**:
+
+```js
+    FOR bestseller in BestsellersTable
         SORT bestseller.quantity DESC
         FOR fashionItem in FashionItemsTable
-            FILTER bestseller._key == fashionItem._key LIMIT 20 RETURN fashionItem
+            FILTER bestseller._key == fashionItem._key 
+            LIMIT 20 
+            RETURN fashionItem
 ```
 
-**GetRecommendations**
+**GetRecommendations**:
 
 ```js
-LET userId = first(FOR user in UsersTable FILTER user.customerId == @customerId return user._id) FOR user IN ANY userId friend FOR fashionItems IN OUTBOUND user purchased RETURN DISTINCT fashionItems
+    LET userId = first(FOR user in UsersTable FILTER user.customerId == @customerId return user._id)
+    FOR user IN ANY userId friend 
+        FOR fashionItems IN OUTBOUND user purchased 
+        RETURN DISTINCT fashionItems
 ```
 
-**GetRecommendationsByFashionItem**
+**GetRecommendationsByFashionItem**:
 
 ```js
-LET userId = first(FOR user in UsersTable FILTER user.customerId == @customerId return user._id) LET fashionItemId = CONCAT("FashionItemsTable/",@fashionItemId) FOR friendsPurchased IN INBOUND fashionItemId purchased FOR user IN ANY userId friend FILTER user._key == friendsPurchased._key RETURN user._key
+    LET userId = first(FOR user in UsersTable FILTER user.customerId == @customerId return user._id) 
+    LET fashionItemId = CONCAT("FashionItemsTable/",@fashionItemId) 
+    FOR friendsPurchased IN INBOUND fashionItemId purchased 
+        FOR user IN ANY userId friend 
+            FILTER user._key == friendsPurchased._key 
+            RETURN user._key
 ```
 
 **Search**
 
 ```js
-FOR doc IN findFashionItems
-SEARCH PHRASE(doc.name, @search, "text_en") OR PHRASE(doc.category, @search, "text_en")
-SORT BM25(doc) desc
-RETURN doc
+    FOR doc IN findFashionItems
+        SEARCH PHRASE(doc.name, @search, "text_en") OR PHRASE(doc.category, @search, "text_en")
+        SORT BM25(doc) desc
+        RETURN doc
 ```
 
-### Macrometa Views
+## Macrometa Views
 
 Search functionality is powered by Macrometa Views. This is saved as `findFashionItems` with below config:
 
@@ -296,50 +329,51 @@ Search functionality is powered by Macrometa Views. This is saved as `findFashio
 }
 ```
 
-Stream Worker
+## Stream Workers
+
 Best seller leader board made with `BestsellersTable` which is updated with each new purchase via the `UpdateBestseller` stream worker
 
 ```js
-@App:name("UpdateBestseller")
-@App:description("Updates BestsellerTable when a new order comes in the OrdersTable")
+    @App:name("UpdateBestseller")
+    @App:description("Updates BestsellerTable when a new order comes in the OrdersTable")
 
-define function getFashionItemQuantity[javascript] return int {
-    const prevQuantity = arguments[0];
-    const nextQuantity = arguments[1];
+    define function getFashionItemQuantity[javascript] return int {
+        const prevQuantity = arguments[0];
+        const nextQuantity = arguments[1];
 
-    let newQuantity = nextQuantity;
-    if(prevQuantity){
-        newQuantity = prevQuantity + nextQuantity;
-    }
-    return newQuantity;
-};
+        let newQuantity = nextQuantity;
+        if(prevQuantity){
+            newQuantity = prevQuantity + nextQuantity;
+        }
+        return newQuantity;
+    };
 
-@source(type='c8db', collection='OrdersTable', @map(type='passThrough'))
-define stream OrdersTable (_json string);
+    @source(type='c8db', collection='OrdersTable', @map(type='passThrough'))
+    define stream OrdersTable (_json string);
 
-@sink(type='c8streams', stream='BestsellerIntermediateStream', @map(type='json'))
-define stream BestsellerIntermediateStream (fashionItemId string, quantity int);
+    @sink(type='c8streams', stream='BestsellerIntermediateStream', @map(type='json'))
+    define stream BestsellerIntermediateStream (fashionItemId string, quantity int);
 
-@store(type = 'c8db', collection='BestsellersTable')
-define table BestsellersTable (_key string, quantity int);
+    @store(type = 'c8db', collection='BestsellersTable')
+    define table BestsellersTable (_key string, quantity int);
 
-select json:getString(jsonElement, '$.fashionItemId') as fashionItemId, json:getInt(jsonElement, '$.quantity') as quantity
-from OrdersTable#json:tokenizeAsObject(_json, "$.fashionItems[*]")
-insert into BestsellerIntermediateStream;
+    select json:getString(jsonElement, '$.fashionItemId') as fashionItemId, json:getInt(jsonElement, '$.quantity') as quantity
+    from OrdersTable#json:tokenizeAsObject(_json, "$.fashionItems[*]")
+    insert into BestsellerIntermediateStream;
 
-select next.fashionItemId as _key, getFashionItemQuantity(prev.quantity, next.quantity) as quantity
-from BestsellerIntermediateStream as next
-left outer join BestsellersTable as prev
-on next.fashionItemId == prev._key
-update or insert into BestsellersTable
-set BestsellersTable.quantity = quantity, BestsellersTable._key = _key
-on BestsellersTable._key == _key;
+    select next.fashionItemId as _key, getFashionItemQuantity(prev.quantity, next.quantity) as quantity
+    from BestsellerIntermediateStream as next
+    left outer join BestsellersTable as prev
+    on next.fashionItemId == prev._key
+    update or insert into BestsellersTable
+    set BestsellersTable.quantity = quantity, BestsellersTable._key = _key
+    on BestsellersTable._key == _key;
 ```
 
 # Code Overview
 
-`Frontend` - it is the code contained at the root of this repo
-`Backend` - it is in the `edgeworker` folder. `edgeworker` folder also contains the `init-script` folder which is a simple node script to make it easy to get started with this demo by creating the required collections, streams, etc on the GDN federation.
+* `Frontend` - it is the code contained at the root of this repo
+* `Backend` - it is in the `edgeworker` folder. `edgeworker` folder also contains the `init-script` folder which is a simple node script to make it easy to get started with this demo by creating the required collections, streams, etc on the GDN federation.
 
 The requests which come to the `responseProvider` communicate with Macrometa GDN to provide the backend functionality - calls with `/api/` get routed to the edge worker in our case, rest all are considered as calls to the UI assets and are handled as such. You can configure your Akamai property to behave differently and change the code accordingly.
 
