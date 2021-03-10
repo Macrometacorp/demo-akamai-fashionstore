@@ -403,8 +403,6 @@ Once you have deployed the edgeworker successfully, you will need to create requ
 
 ## Deploy EdgeWorker
 
-> Note: Remember to supply correct value to the variable `C8_API_KEY` in `client.js`.
-
 * The edgeworker code is contained in the `edgeworker` folder.
 * Update `C8_API_KEY` with your api key in `edgeworker/client.js` file. 
 * Execute 
