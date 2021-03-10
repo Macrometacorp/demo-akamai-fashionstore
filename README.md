@@ -6,56 +6,79 @@ http://fashionstore.demo.macrometa.io/
 
 ![Fasion store sample image](./ecommerce.png)
 
-Macrometa-Akamai Fashionstore Demo App is a full-stack e-commerce web application that creates a storefront (and backend) for customers to shop for "fictitious" fashion clothing & accessories called Edge & M. Originally based on the AWS bookstore template app (https://github.com/aws-samples/aws-bookstore-demo-app), this demo replaces all AWS services like DynamoDB, Neptune, elastic search, lambda etc with Macrometa's geo distributed data platform which provides a K/V store, DynamoDB compatible document database, graph database, streams and event processing along with Akamai workers for the globally distributed functions as a service.
+Macrometa-Akamai Fashionstore Demo App is a full-stack e-commerce web application that creates a storefront (and backend) for customers to shop for "fictitious" fashion clothing & accessories called Edge & M. 
 
-Unlike typical cloud platforms like AWS where the backend stack runs in a single region, Macrometa and Akamai let you build stateful distributed microservices that run in 100s of regions around the world concurrently. The application logic runs in akamai's low latency function as a service runtime on akamai PoPs and make stateful data requests to the closest Macrometa region. End to end latency for P90 is < 55ms from almost everywhere in the world.
+Originally based on the AWS bookstore template app (https://github.com/aws-samples/aws-bookstore-demo-app), this demo replaces all AWS services like below
+* AWS DynamoDB, 
+* AWS Neptune (Graphs), 
+* AWS ElasticSearch (Search), 
+* AWS Lambda 
+* AWS Kinesis 
 
-As a user of the demo- You can browse and search for fashion clothing & accessories, look at recommendations and best sellers, manage your cart, checkout, view your orders, and more.
+This demo uses Macrometa's geo distributed data platform which provides a K/V store, DynamoDB compatible document database, graph database, streams and event processing along with Akamai workers for the globally distributed functions as a service.
 
-## Setup
+Unlike typical cloud platforms like AWS, where the backend stack runs in a single region, Macrometa and Akamai let you build `stateful distributed microservices that run in 100s of regions around the world concurrently`. The application logic runs in akamai's low latency function as a service runtime on akamai PoPs and make stateful data requests to the closest Macrometa region. End to end latency for `P90 is < 55ms` from almost everywhere in the world.
+
+As a user of the demo, you can browse and search for fashion clothing & accessories, look at recommendations and best sellers, manage your cart, checkout, view your orders, and more.
+
+## GDN Account
 
 | **Federation**                                        | **Email**                 | **Passsword** |
 | ----------------------------------------------------- | ------------------------- | ------------- |
 | [Global Data Network](https://gdn.paas.macrometa.io/) | fashionstore@macrometa.io | `xxxxxxxx`    |
 
-## Overview
+## Architecture
 
-### Macrometa components
+### Summary diagram
 
-#### 1. Product catalog/shopping cart - implemented using Macrometa document database
+![Fashionstore Arch](./fashionstore_summary_diagram.png)
 
-```
-FashionItemsTable - collection of the available fashion clothing & accessories.
-CartTable - Fashion items customers have addded in their cart
-OrdersTable - Past orders of a customer
-```
+### High-level, end-to-end diagram
 
-#### 2. Search - implemented using Macrometa Views
+![Fashionstore End to End](./fashionstore_end_to_end.png)
 
-```
-findFashionItems - the view which is queried for search
-```
 
-Search matches on the `category` or the `name` of fashion item in `FashionItemsTable` with phrase matching
+### Macrometa GDN Collections
 
-#### 3. Recommendations - implemented using Macrometa graphs
+**Catalog, Cart, Orders:**
 
-```
-friend - edge collection
-purchased - edge collection
-UsersTable - vertex collection
-FashionItemsTable vertex collection
-UserSocialGraph - Graph
-```
+This is implemented using `document collections` functionality in Macrometa GDN
 
-#### 4. Top sellers list - implemented using Macrometa Streams & Event Processing
+| Entity | Collection Name | Collection Type | Comment |
+|--------|-----------------|-----------------|---------|
+| Catalog | FashionItemsTable | document | Collection of the available fashion clothing & accessories. |
+| Cart | CartTable | document | Fashion items customers have addded in their cart. |
+| Orders | OrdersTable | document | Past orders of a customer. |
 
-```
-UpdateBestseller - Stream app
-BestsellersTable - document collection
-```
+**Recommendations:**
 
-## Database Indexes for different collections
+This is implemented using `graphs` functionality in Macrometa GDN. Each node in the graph is a `vertex` and the links connecting the nodes are `edges`. Both `vertex` and `edges` are document collections. The `edges` require two additional mandatory indexes i.e., `_from` and `_to`.
+
+| Entity | Collection Name | Collection Type | Comment |
+|--------|-----------------|-----------------|---------|
+| Friends | Friend | edge | Edge collection to capture friend relations. |
+| Purchase | Purchased | edge | Edge collection to capture purchases.|
+| Users | UserTable | vertex| Document collection of available users.|
+| Catalog | FashionItemsTable | vertex | Collection of the available fashion clothing & accessories. |
+| Social | UserSocialGraph | graph | User social graph |
+
+**Search:**
+
+Search is implemented using `views` functionality in Macrometa GDN. Search matches on the `category` or the `name` of fashion item in `FashionItemsTable` with phrase matching.
+
+| Entity | Collection Name | Collection Type | Comment |
+|--------|-----------------|-----------------|---------|
+| Find | findFashionItems | view | The view which is queried for search. |
+
+**Top Sellers List:**
+This is implemented using `streams` and `stream processing` functionality in Macrometa.
+
+| Entity |  Name |  Type | Comment |
+|--------|-----------------|-----------------|---------|
+| BestSeller | UpdateBestseller | stream worker | Stream worker to process orders and update best sellers in realtime. |
+| BestSeller | BestsellersTable | document | Collection to store best sellers. |
+
+## Indexes
 
 Create persistent indexes on the collection for the corresponding attributes
 
@@ -74,15 +97,6 @@ Create persistent indexes on the collection for the corresponding attributes
 
 #### 2. Workers - Backend talking with GDN
 
-## Architecture
-
-### Summary diagram
-
-![Fashionstore Arch](./fashionstore_summary_diagram.png)
-
-### High-level, end-to-end diagram
-
-![Fashionstore End to End](./fashionstore_end_to_end.png)
 
 ### Frontend
 
