@@ -1,12 +1,12 @@
-# Macrometa Akamai e-commerce At the Edge demonstrator app
+# E-Commerce using Macrometa GDN & Akamai EdgeWorkers
 
-# Play with a live demo 👇
+**Live Demo: http://fashionstore.demo.macrometa.io/**
 
-http://fashionstore.demo.macrometa.io/
+Macrometa-Akamai Fashionstore Demo App is a full-stack e-commerce web application that creates a storefront (and backend) for customers to shop for "fictitious" fashion clothing & accessories called Edge & M. 
 
 ![Fasion store sample image](./ecommerce.png)
 
-Macrometa-Akamai Fashionstore Demo App is a full-stack e-commerce web application that creates a storefront (and backend) for customers to shop for "fictitious" fashion clothing & accessories called Edge & M. 
+
 
 Originally based on the AWS bookstore template app (https://github.com/aws-samples/aws-bookstore-demo-app), this demo replaces all AWS services like below
 * AWS DynamoDB, 
@@ -27,18 +27,30 @@ As a user of the demo, you can browse and search for fashion clothing & accessor
 | ----------------------------------------------------- | ------------------------- | ------------- |
 | [Global Data Network](https://gdn.paas.macrometa.io/) | fashionstore@macrometa.io | `xxxxxxxx`    |
 
-## Architecture
 
-### Summary diagram
+## Summary diagram
 
 ![Fashionstore Arch](./fashionstore_summary_diagram.png)
 
-### High-level, end-to-end diagram
+## High-level, end-to-end diagram
 
 ![Fashionstore End to End](./fashionstore_end_to_end.png)
 
+## Details
 
-### Macrometa GDN Collections
+### Frontend
+
+* Frontend is a Reactjs application which is hosted on an external server. (Nodejs in our case. You can use something else too).
+* This acts as an Origin server for Akamai CDN and needs to be configured as such as an Akamai property.
+* Akamai CDN is used to cache static assets.
+
+### Backend
+
+The core of backend infrastructure consists of Macrometa Document store(DB), Macrometa Edge store(DB), Macrometa Views(search), Macrometa Stream Workers, Macrometa Graphs and Akamai Edge workers. Akamai Edge workers issue C8QLs to talk with the GDN network.
+
+The application leverages Macrometa GDN document store to store all the data for fashion items, orders, the checkout cart and users. When new purchases or new users are added the corresponding Macrometa Edge collection is also updated. These Edge collections along with Document collection acting as vertices are used by the Macrometa Graphs to generate recommendations for the users. When new purchases are added Macrometa Stream Workers also update the BestSellers Collection store in realtime from which the best sellers leaderboard is generated.
+
+![Fashionstore Backend](./fashionstore_backend.png)
 
 **Catalog, Cart, Orders:**
 
@@ -71,6 +83,7 @@ Search is implemented using `views` functionality in Macrometa GDN. Search match
 | Find | findFashionItems | view | The view which is queried for search. |
 
 **Top Sellers List:**
+
 This is implemented using `streams` and `stream processing` functionality in Macrometa.
 
 | Entity |  Name |  Type | Comment |
@@ -78,7 +91,7 @@ This is implemented using `streams` and `stream processing` functionality in Mac
 | BestSeller | UpdateBestseller | stream worker | Stream worker to process orders and update best sellers in realtime. |
 | BestSeller | BestsellersTable | document | Collection to store best sellers. |
 
-## Indexes
+**Indexes:**
 
 Create persistent indexes on the collection for the corresponding attributes
 
@@ -91,26 +104,6 @@ Create persistent indexes on the collection for the corresponding attributes
 | OrdersTable       | `customerId`                                |
 | UsersTable        | `customerId`                                |
 
-### Akamai components
-
-#### 1. CDN - Akamai CDN to cache static assets
-
-#### 2. Workers - Backend talking with GDN
-
-
-### Frontend
-
-Frontend is a Reactjs application which is hosted on an external server (Nodejs in our case. You can use something else too.) deployed in a Linode machine.
-
-This acts as an Origin server for Akamai CDN and needs to be configured as such as an Akamai property.
-
-### Backend
-
-The core of backend infrastructure consists of Macrometa document store(DB), Macrometa Edge store(DB), Macrometa Views(search), Macrometa Stream Workers, Macrometa Graphs and Akamai Edge workers. Edge workers issue C8QLs to talk with the GDN network.
-
-The application leverages Amazon document store to store all the data for fashion items, orders, the checkout cart and users. When new purchases or new users are added the corresponding Macrometa Edge collection is also updated. These Edge collections along with Document collection acting as vertices are used by the Macrometa Graphs to generate recommendations for the users. When new purchases are added Macrometa Stream Workers also update the BestSellers Collection store in realtime from which the best sellers leaderboard is generated.
-
-![Fashionstore Backend](./fashionstore_backend.png)
 
 ## API Details
 
@@ -120,36 +113,34 @@ Below are the list of APIs being used.
 
 **Fashion items (Macrometa Docuemnt Store DB)**
 
-GET /fashionItems (ListFashionItems)  
-GET /fashionItems/{:id} (GetFashionItem)
+* GET /fashionItems (ListFashionItems)  
+* GET /fashionItems/{:id} (GetFashionItem)
 
 **Cart (Macrometa Docuemnt Store DB)**
 
-GET /cart (ListItemsInCart)  
-POST /cart (AddToCart)  
-PUT /cart (UpdateCart)  
-DELETE /cart (RemoveFromCart)  
-GET /cart/{:fashionItemId} (GetCartItem)
+* GET /cart (ListItemsInCart)  
+* POST /cart (AddToCart)  
+* PUT /cart (UpdateCart)  
+* DELETE /cart (RemoveFromCart)  
+* GET /cart/{:fashionItemId} (GetCartItem)
 
 **Orders (Macrometa Docuemnt Store DB)**
 
-GET /orders (ListOrders)  
-POST /orders (Checkout)
+* GET /orders (ListOrders)  
+* POST /orders (Checkout)
 
 **Best Sellers (Macrometa Docuemnt Store DB)**
 
-GET /bestsellers (GetBestSellers)
+* GET /bestsellers (GetBestSellers)
 
 **Recommendations (Macrometa Graphs)**
 
-GET /recommendations (GetRecommendations)  
-GET /recommendations/{fashionItemId} (GetRecommendationsByFashionItem)
+* GET /recommendations (GetRecommendations)  
+* GET /recommendations/{fashionItemId} (GetRecommendationsByFashionItem)
 
 **Search (Macrometa Views)**
 
-GET /search (Search)
-
-&nbsp;
+* GET /search (Search)
 
 ### C8QLs
 
