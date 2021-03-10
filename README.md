@@ -370,40 +370,56 @@ Best seller leader board made with `BestsellersTable` which is updated with each
     on BestsellersTable._key == _key;
 ```
 
-# Code Overview
+## Development Details
 
-* `Frontend` - it is the code contained at the root of this repo
-* `Backend` - it is in the `edgeworker` folder. `edgeworker` folder also contains the `init-script` folder which is a simple node script to make it easy to get started with this demo by creating the required collections, streams, etc on the GDN federation.
+### Notes:
 
-The requests which come to the `responseProvider` communicate with Macrometa GDN to provide the backend functionality - calls with `/api/` get routed to the edge worker in our case, rest all are considered as calls to the UI assets and are handled as such. You can configure your Akamai property to behave differently and change the code accordingly.
+* `edgeworker` folder contains all the required backend.
+* `init-script` fold inside `edgeworker` contains script to create required collections, streams, etc in Macrometa GDN for the demo
+* `/api/` calls are configured to get routed to the Akamai EdgeWorker. Rest of the calls are calls to UI assets. The requests which come to the `responseProvider` communicate with Macrometa GDN to provide the backend functionality.
+* `responseProvider(main.js)` calls the `executeHandler(router.js)`to handle the requests. 
+* `router.js` contains different handler functions defined for different path regex.
+* `handler.js` contains individual handler functions. Functions inside this files get the appropriate queries from the `c8qls.js` file. 
+* `c8ql.js` contains the queries (C8QL). These are executed by calling Macrometa GDN `/cursor` API. The `bind variables` in the body of the request are the parameters to the queries.
 
-`responseProvider(main.js)` calls the `executeHandler(router.js)` to handle the requests. In `router.js` we have different handler functions defined for different path regex.
-The individual handler functions are defined in `handler.js`. Functions inside this files get the appropriate C8QLs from the `c8qls.js` file. Once we have the C8QL REST call is made to `/cursor` API with the C8QL and the `bind variables` in the body of the request and the response is returned.
 
-# Starting with development
+## Create GDN Collections, Views, Streams & Stream Workers
 
-## Initialising GDN with init data
+Once you have deployed the edgeworker successfully, you will need to create required collections and populate with data inside GDN.
 
-Once you have deployed the edgeworker successfully, you will need to initialize some init data. There is a simple node script in `init-script` folder contained in the `edgeworker` folder. Execute the node script by running `npm i && node init.js`.
+* Update following values in `edgeworker/init-script/init.js` script
+  * `C8_URL`, 
+  * `C8_API_KEY` and 
+  * `DC_LIST` 
+  
+* Execute `init.js` script as follows
+  
+  ```
+    npm i && node init.js
+  ```
 
-> Note: Remember to supply correct values to the variables `C8_URL`, `C8_API_KEY` and `DC_LIST` in `init.js`.
+* Login to the tenant and enable the stream worker.
+* Edit and save the VIEW with the correct data if not initialised properly. Details can be found in `init.js`
 
-1. Now login to the tenant and activate the stream app.
-2. Edit and save the VIEW with the correct data if not initialised properly. Details can be found in init.js
-
-## Deploying edgeworker
+## Deploy EdgeWorker
 
 > Note: Remember to supply correct value to the variable `C8_API_KEY` in `client.js`.
 
-The edgeworker code is contained in the `edgeworker` folder.
-Execute `npm i && npm run build`. This will create a `dist` folder with `fashionstore.tgz` in it. Upload this file to the Akamai control center in the `Edgeworker` section.
+* The edgeworker code is contained in the `edgeworker` folder.
+* Update `C8_API_KEY` with your api key in `edgeworker/client.js` file. 
+* Execute 
+
+  ```
+    npm i && npm run build
+  ``` 
+ This will create a `dist` folder with `fashionstore.tgz` in it. 
+ * Upload this file to the Akamai control center in the `Edgeworker` section.
 
 A simple hello world example can be found [here](https://learn.akamai.com/en-us/webhelp/edgeworkers/edgeworkers-getting-started-guide/GUID-F8628BC2-8F3A-4E42-B215-DD650ACFF292.html).
 
 ## Working on the edgeworker locally
 
-To develop the edgeworker code locally you will need `akamai sndbox` on your development machine. For that you will need to have `Akamai CLI` and `Akamai Edgeworker CLI` installed first.
-More info can be found [here](https://developer.akamai.com/cli).
+To develop the edgeworker code locally you will need `akamai sndbox` on your development machine. For that you will need to have `Akamai CLI` and `Akamai Edgeworker CLI` installed first. More info can be found [here](https://developer.akamai.com/cli).
 
 ## Working with the UI
 
