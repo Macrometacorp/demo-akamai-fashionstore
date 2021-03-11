@@ -1,9 +1,8 @@
 const jsc8 = require("jsc8");
 
-const C8_URL = "xxxx";
-const C8_API_KEY =
-  "xxxx";
-const DC_LIST = "xxxx";
+const C8_URL = "https://gdn.paas.macrometa.io";
+const C8_API_KEY = "xxxx";
+const DC_LIST = "gdn-us-west";
 
 const COLLECTIONS = [
   {
@@ -33,8 +32,7 @@ const COLLECTIONS = [
       {
         _key: "f4",
         category: "Bags",
-        name:
-          "The Clownfish Regal Sling Bag, Sling Bag for Travel, Sling Bag",
+        name: "The Clownfish Regal Sling Bag, Sling Bag for Travel, Sling Bag",
         price: 8.57,
         rating: 4.2,
       },
@@ -49,24 +47,21 @@ const COLLECTIONS = [
       {
         _key: "f6",
         category: "Designer",
-        name:
-          "Ecosunny Deep V Neck Short Sleeve Floral Lace",
+        name: "Ecosunny Deep V Neck Short Sleeve Floral Lace",
         price: 44.99,
         rating: 3.7,
       },
       {
         _key: "f7",
         category: "Designer",
-        name:
-          "Miss Chase Black Designer Sleeves Pearl",
+        name: "Miss Chase Black Designer Sleeves Pearl",
         price: 20.99,
         rating: 4,
       },
       {
         _key: "f8",
         category: "Designer",
-        name:
-          "Long Sleeves Peter Pan Collar Aline Fit and Flare",
+        name: "Long Sleeves Peter Pan Collar Aline Fit and Flare",
         price: 26.99,
         rating: 4.6,
       },
@@ -87,8 +82,7 @@ const COLLECTIONS = [
       {
         _key: "f11",
         category: "Homewear",
-        name:
-          "Regular Fit Cotton Short for Gym and Home",
+        name: "Regular Fit Cotton Short for Gym and Home",
         price: 6.07,
         rating: 4,
       },
@@ -116,8 +110,7 @@ const COLLECTIONS = [
       {
         _key: "f15",
         category: "Homewear",
-        name:
-          "minicult Cotton Pajama Pants Unisex (Pack of 6)",
+        name: "minicult Cotton Pajama Pants Unisex (Pack of 6)",
         price: 18.1,
         rating: 3.3,
       },
@@ -173,8 +166,7 @@ const COLLECTIONS = [
       {
         _key: "f23",
         category: "Men",
-        name:
-          "LEVIZO Cotton Checkered Casual Classic Regular Fit",
+        name: "LEVIZO Cotton Checkered Casual Classic Regular Fit",
         price: 7.7,
         rating: 4.1,
       },
@@ -333,7 +325,7 @@ const COLLECTIONS = [
  * FashionItemsTable - category
  * OrdersTable - customerId
  * UsersTable - customerId (unique)
- */ 
+ */
 
 const EDGE_COLLECTIONS = [
   {
