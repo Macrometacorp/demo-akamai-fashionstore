@@ -417,7 +417,7 @@ A simple hello world example can be found [here](https://learn.akamai.com/en-us/
 
 ## Working on the edgeworker locally
 
-To develop the edgeworker code locally you will need `akamai sndbox` on your development machine. For that you will need to have `Akamai CLI` and `Akamai Edgeworker CLI` installed first. More info can be found [here](https://developer.akamai.com/cli).
+To develop the edgeworker code locally you will need `akamai sandbox` on your development machine. For that you will need to have `Akamai CLI` and `Akamai Edgeworker CLI` installed first. More info can be found [here](https://developer.akamai.com/cli).
 
 ## Working with the UI
 
