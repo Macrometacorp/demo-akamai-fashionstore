@@ -52,6 +52,45 @@ The application leverages Macrometa GDN document store to store all the data for
 
 ![Fashionstore Backend](./fashionstore_backend.png)
 
+### API Details
+
+Below are the list of APIs being used.
+
+> Note: As of writing this Edge Worker's `ResponseProvider` doesn't support `PUT, POST, DELETE, etc`. To work around this limitation these types of calls are converted to query params by the frontend and then sent over. Once in `ResponseProvider` we can make calls to GDN normally.
+
+**Fashion items (Macrometa Document Store)**
+
+* GET /fashionItems (ListFashionItems)  
+* GET /fashionItems/{:id} (GetFashionItem)
+
+**Cart (Macrometa Document Store)**
+
+* GET /cart (ListItemsInCart)  
+* POST /cart (AddToCart)  
+* PUT /cart (UpdateCart)  
+* DELETE /cart (RemoveFromCart)  
+* GET /cart/{:fashionItemId} (GetCartItem)
+
+**Orders (Macrometa Document Store)**
+
+* GET /orders (ListOrders)  
+* POST /orders (Checkout)
+
+**Best Sellers (Macrometa Document Store )**
+
+* GET /bestsellers (GetBestSellers)
+
+**Recommendations (Macrometa Graphs)**
+
+* GET /recommendations (GetRecommendations)  
+* GET /recommendations/{fashionItemId} (GetRecommendationsByFashionItem)
+
+**Search (Macrometa Views)**
+
+* GET /search (Search)
+
+### Collections
+
 **Catalog, Cart, Orders:**
 
 This is implemented using `document collections` functionality in Macrometa GDN
@@ -105,44 +144,7 @@ Create persistent indexes on the collection for the corresponding attributes
 | UsersTable        | `customerId`                                |
 
 
-## API Details
-
-Below are the list of APIs being used.
-
-> Note: As of writing this Edge Worker's `ResponseProvider` doesn't support `PUT, POST, DELETE, etc`. To work around this limitation these types of calls are converted to query params by the frontend and then sent over. Once in `ResponseProvider` we can make calls to GDN normally.
-
-**Fashion items (Macrometa Docuemnt Store DB)**
-
-* GET /fashionItems (ListFashionItems)  
-* GET /fashionItems/{:id} (GetFashionItem)
-
-**Cart (Macrometa Docuemnt Store DB)**
-
-* GET /cart (ListItemsInCart)  
-* POST /cart (AddToCart)  
-* PUT /cart (UpdateCart)  
-* DELETE /cart (RemoveFromCart)  
-* GET /cart/{:fashionItemId} (GetCartItem)
-
-**Orders (Macrometa Docuemnt Store DB)**
-
-* GET /orders (ListOrders)  
-* POST /orders (Checkout)
-
-**Best Sellers (Macrometa Docuemnt Store DB)**
-
-* GET /bestsellers (GetBestSellers)
-
-**Recommendations (Macrometa Graphs)**
-
-* GET /recommendations (GetRecommendations)  
-* GET /recommendations/{fashionItemId} (GetRecommendationsByFashionItem)
-
-**Search (Macrometa Views)**
-
-* GET /search (Search)
-
-## Queries
+### Queries
 
 C8QLs are used by the Akamai workers in `ResponseProvider` to communicate with Macrometa GDN.
 
@@ -310,7 +312,7 @@ OR
         RETURN doc
 ```
 
-## Macrometa Views
+### Macrometa Views
 
 Search functionality is powered by Macrometa Views. This is saved as `findFashionItems` with below config:
 
@@ -329,7 +331,7 @@ Search functionality is powered by Macrometa Views. This is saved as `findFashio
 }
 ```
 
-## Stream Workers
+### Stream Workers
 
 Best seller leader board made with `BestsellersTable` which is updated with each new purchase via the `UpdateBestseller` stream worker
 
