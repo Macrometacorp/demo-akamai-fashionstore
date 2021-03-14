@@ -52,11 +52,11 @@ The application leverages Macrometa GDN document store to store all the data for
 
 ![Fashionstore Backend](./fashionstore_backend.png)
 
-### API Details
+## API Details
 
 Below are the list of APIs being used.
 
-> Note: As of writing this Edge Worker's `ResponseProvider` doesn't support `PUT, POST, DELETE, etc`. To work around this limitation these types of calls are converted to query params by the frontend and then sent over. Once in `ResponseProvider` we can make calls to GDN normally.
+> Currently Edge Workers do not support `PUT, POST, DELETE` calls. So frontend utilizes API params to model below APIs while calling the edgeworker. The edge worker executes appropriate queries on GDN relevant to the provided API param via `ResponseProvider`.
 
 **Fashion items (Macrometa Document Store)**
 
@@ -89,7 +89,7 @@ Below are the list of APIs being used.
 
 * GET /search (Search)
 
-### Collections
+## Collections
 
 **Catalog, Cart, Orders:**
 
@@ -144,7 +144,7 @@ Create persistent indexes on the collection for the corresponding attributes
 | UsersTable        | `customerId`                                |
 
 
-### Queries
+## Queries
 
 C8QLs are used by the Akamai workers in `ResponseProvider` to communicate with Macrometa GDN.
 
@@ -331,7 +331,7 @@ Search functionality is powered by Macrometa Views. This is saved as `findFashio
 }
 ```
 
-### Stream Workers
+## Stream Workers
 
 Best seller leader board made with `BestsellersTable` which is updated with each new purchase via the `UpdateBestseller` stream worker
 
@@ -396,7 +396,7 @@ update or insert into BestsellersTable
 * `c8ql.js` contains the queries (C8QL). These are executed by calling Macrometa GDN `/cursor` API. The `bind variables` in the body of the request are the parameters to the queries.
 
 
-## Create GDN Collections, Views, Streams & Stream Workers
+### Create GDN Collections, Views, Streams & Stream Workers
 
 Once you have deployed the edgeworker successfully, you will need to create required collections and populate with data inside GDN.
 
@@ -414,7 +414,7 @@ Once you have deployed the edgeworker successfully, you will need to create requ
 * Login to the tenant and enable the stream worker.
 * Edit and save the VIEW with the correct data if not initialised properly. Details can be found in `init.js`
 
-## Deploy EdgeWorker
+### Deploy EdgeWorker
 
 * The edgeworker code is contained in the `edgeworker` folder.
 * Update `C8_API_KEY` with your api key in `edgeworker/client.js` file. 
@@ -428,7 +428,7 @@ Once you have deployed the edgeworker successfully, you will need to create requ
 
 A simple hello world example can be found [here](https://learn.akamai.com/en-us/webhelp/edgeworkers/edgeworkers-getting-started-guide/GUID-F8628BC2-8F3A-4E42-B215-DD650ACFF292.html).
 
-## Working on the edgeworker locally
+### Working on the edgeworker locally
 
 To develop the edgeworker code locally you will need `akamai sandbox` on your development machine. For that you will need to have `Akamai CLI` and `Akamai Edgeworker CLI` installed first. More info can be found [here](https://developer.akamai.com/cli).
 
