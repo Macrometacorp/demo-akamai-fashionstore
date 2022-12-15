@@ -1,139 +1,134 @@
-import { Auth } from "./apiCalls";
-import React, { Component, Fragment } from "react";
-import { LinkContainer } from "react-router-bootstrap";
-import { Link, withRouter } from "react-router-dom";
-import { Nav, Navbar, NavItem } from "react-bootstrap";
-import "./App.css";
-import { Routes } from "./Routes";
+import { Auth } from "./apiCalls"
+import React, { Component, Fragment } from "react"
+import { LinkContainer } from "react-router-bootstrap"
+import { Link, withRouter } from "react-router-dom"
+import { Nav, Navbar, NavItem } from "react-bootstrap"
+import "./App.css"
+import { Routes } from "./Routes"
 
-import fashionstore from "./images/fashionstore.png"; 
+import fashionstore from "./images/fashionstore.png"
 
 interface AppProps {
-  history: any;
+    history: any
 }
 
 interface AppState {
-  isAuthenticated: boolean;
-  isAuthenticating: boolean;
+    isAuthenticated: boolean
+    isAuthenticating: boolean
 }
 
 class App extends Component<AppProps, AppState> {
-  constructor(props: AppProps) {
-    super(props);
+    constructor(props: AppProps) {
+        super(props)
 
-    this.state = {
-      isAuthenticated: false,
-      isAuthenticating: true,
-    };
+        this.state = {
+            isAuthenticated: false,
+            isAuthenticating: true,
+        }
 
-    document.title = "Fashion Store";
-  }
-
-  async componentDidMount() {
-    try {
-      if (await Auth.currentSession()) {
-        this.userHasAuthenticated(true);
-      }
-    } catch (e) {
-      if (e !== "No current user") {
-        console.error(e);
-      }
+        document.title = "Fashion Store"
     }
 
-    this.setState({ isAuthenticating: false });
-  }
+    async componentDidMount() {
+        try {
+            if (await Auth.currentSession()) {
+                this.userHasAuthenticated(true)
+            }
+        } catch (e) {
+            if (e !== "No current user") {
+                console.error(e)
+            }
+        }
 
-  userHasAuthenticated = (authenticated: boolean) => {
-    this.setState({ isAuthenticated: authenticated });
-  };
+        this.setState({ isAuthenticating: false })
+    }
 
-  handleLogout = async () => {
-    await Auth.signOut();
+    userHasAuthenticated = (authenticated: boolean) => {
+        this.setState({ isAuthenticated: authenticated })
+    }
 
-    this.userHasAuthenticated(false);
-    this.props.history.push("/login");
-  };
+    handleLogout = async () => {
+        await Auth.signOut()
 
-  showLoggedInBar = () => (
-    <Fragment>
-      <LinkContainer to="/past">
-        <NavItem>
-          <span className="orange line-height-24">Past orders</span>
-        </NavItem>
-      </LinkContainer>
-      <LinkContainer to="/best">
-        <NavItem>
-          <span className="orange line-height-24">Best sellers</span>
-        </NavItem>
-      </LinkContainer>
-      <NavItem onClick={this.handleLogout}>
-        <span className="orange line-height-24">Log out</span>
-      </NavItem>
-      <LinkContainer to="/cart">
-        <NavItem>
-          <div className="shopping-icon-container">
-            <span
-              className="glyphicon glyphicon-shopping-cart white"
-              aria-hidden="true"
-            ></span>
-          </div>
-        </NavItem>
-      </LinkContainer>
-    </Fragment>
-  );
+        this.userHasAuthenticated(false)
+        this.props.history.push("/login")
+    }
 
-  showLoggedOutBar = () => (
-    <Fragment>
-      <LinkContainer to="/signup">
-        <NavItem>
-          <span className="orange">Sign up</span>
-        </NavItem>
-      </LinkContainer>
-      <LinkContainer to="/login">
-        <NavItem>
-          <span className="orange">Log in</span>
-        </NavItem>
-      </LinkContainer>
-    </Fragment>
-  );
+    showLoggedInBar = () => (
+        <Fragment>
+            <LinkContainer to="/past">
+                <NavItem>
+                    <span className="orange line-height-24">Past orders</span>
+                </NavItem>
+            </LinkContainer>
+            <LinkContainer to="/best">
+                <NavItem>
+                    <span className="orange line-height-24">Best sellers</span>
+                </NavItem>
+            </LinkContainer>
+            <NavItem onClick={this.handleLogout}>
+                <span className="orange line-height-24">Log out</span>
+            </NavItem>
+            <LinkContainer to="/cart">
+                <NavItem>
+                    <div className="shopping-icon-container">
+                        <span className="glyphicon glyphicon-shopping-cart white" aria-hidden="true"></span>
+                    </div>
+                </NavItem>
+            </LinkContainer>
+        </Fragment>
+    )
 
-  render() {
-    const childProps = {
-      isAuthenticated: this.state.isAuthenticated,
-      userHasAuthenticated: this.userHasAuthenticated,
-    };
+    showLoggedOutBar = () => (
+        <Fragment>
+            <LinkContainer to="/signup">
+                <NavItem>
+                    <span className="orange">Sign up</span>
+                </NavItem>
+            </LinkContainer>
+            <LinkContainer to="/login">
+                <NavItem>
+                    <span className="orange">Log in</span>
+                </NavItem>
+            </LinkContainer>
+        </Fragment>
+    )
 
-    return (
-      !this.state.isAuthenticating && (
-        <div className="App container">
-          <Navbar fluid collapseOnSelect>
-            <Navbar.Header>
-              <Navbar.Brand>
-                <Link to="/">
-                  <span className="orange">
-                    {" "}
-                    <img src={fashionstore} alt="fashionstore" /> FASHIONSTORE
-                  </span>
-                </Link>
-              </Navbar.Brand>
-              <Navbar.Toggle />
-            </Navbar.Header>
-            <Navbar.Collapse>
-              <Nav pullRight>
-                {this.state.isAuthenticated
-                  ? this.showLoggedInBar()
-                  : this.showLoggedOutBar()}
-              </Nav>
-            </Navbar.Collapse>
-          </Navbar>
-          <Routes
-            isAuthenticated={childProps.isAuthenticated}
-            userHasAuthenticated={childProps.userHasAuthenticated}
-          />
-        </div>
-      )
-    );
-  }
+    render() {
+        const childProps = {
+            isAuthenticated: this.state.isAuthenticated,
+            userHasAuthenticated: this.userHasAuthenticated,
+        }
+
+        return (
+            !this.state.isAuthenticating && (
+                <div className="App container">
+                    <Navbar fluid collapseOnSelect>
+                        <Navbar.Header>
+                            <Navbar.Brand>
+                                <Link to="/">
+                                    <span className="orange">
+                                        {" "}
+                                        <img src={fashionstore} alt="fashionstore" /> FASHIONSTORE
+                                    </span>
+                                </Link>
+                            </Navbar.Brand>
+                            <Navbar.Toggle />
+                        </Navbar.Header>
+                        <Navbar.Collapse>
+                            <Nav pullRight>
+                                {this.state.isAuthenticated ? this.showLoggedInBar() : this.showLoggedOutBar()}
+                            </Nav>
+                        </Navbar.Collapse>
+                    </Navbar>
+                    <Routes
+                        isAuthenticated={childProps.isAuthenticated}
+                        userHasAuthenticated={childProps.userHasAuthenticated}
+                    />
+                </div>
+            )
+        )
+    }
 }
 
-export default withRouter(App as any);
+export default withRouter(App as any)

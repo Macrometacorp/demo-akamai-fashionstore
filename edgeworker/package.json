@@ -1,28 +1,22 @@
 {
-  "name": "edgeworker",
-  "version": "1.0.0",
-  "description": "",
-  "main": "main.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "makeTarball": "cd dist/work && echo ${PWD} && tar -czvf ../fashionstore.tgz *",
-    "updateSandbox": "cd dist && echo ${PWD} && akamai sandbox update-edgeworker 4692 fashionstore.tgz",
-    "buildOld": "rm -rf fashionstore.tgz && tar -czvf fashionstore.tgz main.js router.js handler.js client.js c8qls.js bundle.json && npm run updateSandbox",
-    "prebuild": "echo 'Pass a valid C8_API_KEY in the client.js file. Ignore if already done.'",
-    "build": "rm -rf dist && rollup -c",
-    "postbuild": "npm run makeTarball && npm run updateSandbox"
-    
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "js-sha256": "^0.9.0"
-  },
-  "devDependencies": {
-    "@rollup/plugin-commonjs": "^16.0.0",
-    "@rollup/plugin-node-resolve": "^10.0.0",
-    "rollup": "^2.33.1",
-    "rollup-plugin-copy-assets": "^2.0.1",
-    "rollup-plugin-json": "^4.0.0"
-  }
+    "name": "fashion-store-edgeworker",
+    "version": "1.0.0",
+    "description": "Fashion store edgeworker",
+    "main": "main.js",
+    "scripts": {
+        "makeTarball": "cd dist/work && echo ${PWD} && tar -czvf ../fashionstore.tgz *",
+        "build": "rm -rf dist && rollup -c",
+        "postbuild": "npm run makeTarball"
+    },
+    "license": "ISC",
+    "dependencies": {
+        "js-sha256": "^0.9.0"
+    },
+    "devDependencies": {
+        "@rollup/plugin-commonjs": "^16.0.0",
+        "@rollup/plugin-node-resolve": "^10.0.0",
+        "rollup": "^2.33.1",
+        "rollup-plugin-copy-assets": "^2.0.1",
+        "rollup-plugin-json": "^4.0.0"
+    }
 }
