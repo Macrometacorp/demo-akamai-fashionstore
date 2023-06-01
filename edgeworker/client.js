@@ -2,7 +2,7 @@ import { httpRequest } from "http-request"
 
 const C8_URL = "https://AKAMAI_HOSTNAME"
 const C8_API_KEY = "xxxx"
-const FABRIC = "_system"
+const FABRIC = "fashion_store"
 
 const client = {
     executeQuery: function (query, bindVars) {
