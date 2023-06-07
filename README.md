@@ -22,9 +22,9 @@ As a user of the demo, you can browse and search for fashion clothing & accessor
 
 ## GDN Tenant Account
 
-| **Federation**                                        | **Email**                 | **Passsword** |
+| **Federation**                                        | **Fabric** | **Email**                 |
 | ----------------------------------------------------- | ------------------------- | ------------- |
-| [Global Data Network](https://gdn.paas.macrometa.io/) | fashionstore@macrometa.io | `xxxxxxxx`    |
+| [Play](https://play.macrometa.io/) | fashion_store | demo@macrometa.io |
 
 ## Architecture
 
