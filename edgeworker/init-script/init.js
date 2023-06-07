@@ -1,8 +1,9 @@
 const jsc8 = require("jsc8")
 
-const C8_URL = "https://gdn.paas.macrometa.io"
+const C8_URL = "https://play2.paas.macrometa.io"
+const C8_FABRIC_NAME = "fashion_store"
 const C8_API_KEY = "xxxx"
-const DC_LIST = "gdn-us-west"
+const DC_LIST = "play2-us-west"
 
 const COLLECTIONS = [
     {
@@ -539,6 +540,7 @@ async function init(client) {
 
 const client = new jsc8({
     url: C8_URL,
+    fabricName: C8_FABRIC_NAME,
     apiKey: C8_API_KEY,
 })
 
